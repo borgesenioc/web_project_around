@@ -1,0 +1,43 @@
+.profile {
+    display: grid;
+    grid-template-columns: 120px 415px 1fr;
+    width: 880px;
+    height: 120px;
+    margin: 0;
+    padding: 0;
+}
+
+.profile__avatar {
+    width: 120px;
+    height: 120px;
+    grid-column: 1;
+    grid-row: 1;
+}
+.profile__default-image {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile__info {
+    grid-column: 2;
+    display: grid;
+    grid-column: 400px 1f;
+    grid-row: 50px 1fr;
+}
+
+.profile__info-title {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.profile__info-paragraph {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.profile__info-edit {
+    grid-column: 2;
+    grid-row: 1;
+}
