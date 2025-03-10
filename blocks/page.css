@@ -11,3 +11,7 @@
     align-items: center;
     font-family: 'Inter-Regular', Arial, sans-serif;
 }
+
+* {
+    border: solid red 1px;
+}
