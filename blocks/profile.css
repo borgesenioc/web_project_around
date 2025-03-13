@@ -40,4 +40,15 @@
 .profile__info-edit {
     grid-column: 2;
     grid-row: 1;
+    width: 24px;
+    height: 24px;
+    background-color: black;
+    padding: 0;
+    margin: 0;
+    align-self: center;
+}
+
+.profile__info-edit-image {
+    width: 100%;
+    height: 100%;
 }
