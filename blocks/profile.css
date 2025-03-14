@@ -22,30 +22,45 @@
 
 .profile__info {
     grid-column: 2;
+    margin-left: 30px;
     display: grid;
     grid-column: 400px 1f;
-    grid-row: 50px 1fr;
+    grid-row: 40px 1fr;
+    align-self: center;
+    width: 415px;
+    height: 77px;
+    row-gap: 16px;
+    column-gap: 18px;
 }
 
 .profile__info-title {
     grid-column: 1;
     grid-row: 1;
+    align-self: end;
+    font-size: 41px;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
 }
 
 .profile__info-paragraph {
     grid-column: 1;
     grid-row: 2;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .profile__info-edit-button {
     grid-column: 2;
     grid-row: 1;
+    align-self: end;
     width: 24px;
     height: 24px;
     background-color: black;
     padding: 0;
     margin: 0;
-    align-self: center;
 }
 
 .profile__info-edit-image {
@@ -55,8 +70,7 @@
 
 .profile__add {
     margin: 0;
-    padding: 0;
-    align-self: center;
+    padding-top: 45px;
     justify-self: end;
 }
 .profile__add-button {
@@ -70,54 +84,6 @@
 .profile__add-button-image {
     width: 100%;
     height: 100%;
-}
-.elements {
-    display: grid;
-
-    height: auto;
-    padding-top: 50px;
-    background-color: black;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-}
-
-.elements__card {
-    grid-column: 1;
-    grid-row: 1;
-    background-color: white;
-    color: black;
-    font-weight: 900;
-    font-size: 24px;
-    width: 282px;
-    height: 361px;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.elements__card-image {
-    width: 100%;
-    height: 282px;
-}
-
-.elements__card-header {
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.elements__card-header-title {
-    width: 200px;
-}
-
-.elements__card-header-like-button {
-    background-image: url('../images/like-button.svg');
-    background-color: transparent;
-    border: none;
-    max-width: 21px;
-    width: 100%;
-    height: 19px;
-    border: solid red 1px;
 }
