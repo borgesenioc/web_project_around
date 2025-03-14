@@ -1,0 +1,14 @@
+.footer {
+    display: grid;
+    width: 880px;
+    height: 145px;
+}
+
+.footer__paragraph {
+    align-self: center;
+    justify-self: left;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+    color: #545454;
+}
