@@ -129,7 +129,7 @@
     width: 100%;
     height: auto;
     display: grid;
-    grid-template-columns: 1fr 41px;
+    grid-template-columns: 1fr 39px;
     align-items: center;
     justify-content: center;
 }
