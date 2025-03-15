@@ -1,4 +1,7 @@
 .content {
+    width: 100%;
+    height: auto;
+    max-width: 880px;
     margin-top: 40px;
     padding: 0;
     height: auto;
