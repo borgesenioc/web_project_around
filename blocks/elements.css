@@ -60,7 +60,7 @@
 }
 
 .elements__card-header-like-button {
-    background-image: url('../images/like-button.svg');
+    background-image: url('../images/like-buuton-disabled.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -72,6 +72,14 @@
     margin: 0;
     padding: 0;
     grid-template-columns: 2;
+}
+
+.elements__card-header-like-button:hover {
+    background-image: url('../images/like-button-hover.svg');
+}
+
+.elements__card-header-like-button:active {
+    background-image: url('../images/like-button-active.png');
 }
 
 @media screen and (max-width: 1280px) {
