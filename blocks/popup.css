@@ -15,6 +15,7 @@
 }
 
 .popup__container {
+    position: relative;
     margin: 0;
     padding: 0;
     background: #fff;
@@ -25,6 +26,23 @@
     flex-direction: column;
     align-items: center;
     box-shadow: 0px 0px 25px 0px #00000026;
+}
+
+.popup__close {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    background-image: url('../images/close_icon.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    border: none;
+
+    padding: 0;
+    margin: 0;
 }
 
 .popup__form-title {
@@ -66,6 +84,13 @@
     .popup__container {
         width: 282px;
     }
+
+    .popup__close {
+        width: 26px;
+        height: 26px;
+        background: cover;
+        right: 0;
+    }
     .popup__form-title {
         font-size: 18px;
         margin: 30px 0 0;
@@ -83,6 +108,7 @@
         margin-top: 32px;
         width: 238px;
         height: 46px;
+
         background-position: center;
         background-repeat: no-repeat;
     }
