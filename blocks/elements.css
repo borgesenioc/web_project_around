@@ -11,6 +11,7 @@
     grid-template-columns: repeat(3, 282px);
     grid-template-rows: repeat 2 (361px);
     justify-content: center;
+    box-sizing: border-box;
 }
 
 .elements__card {
@@ -81,6 +82,6 @@
 
 @media screen and (max-width: 800px) {
     .elements {
-        grid-template-columns: repeat(2, 282px);
+        grid-template-columns: 282px;
     }
 }
