@@ -1,4 +1,4 @@
-/* // Vamos encontrar o formulário no DOM
+// Vamos encontrar o formulário no DOM
 let formElement = document.querySelector('popup__form') // Use o método querySelector()
 
 // Em seguida vem o handler do submit
@@ -14,17 +14,22 @@ function handleProfileFormSubmit(evt) {
     // Explicaremos em mais detalhes posteriormente.
 
     // Vamos encontrar os campos de formulário do DOM
-    let nameInput = document.querySelector(evt.formName) // Use querySelector()
-    let jobInput = document.querySelector(evt.formJob) // Use querySelector()
+    let nameInput = document.querySelector('#formName') // Use querySelector()
+    let jobInput = document.querySelector('#formJob') // Use querySelector()
 
     // Pegue os valores de cada campo do valor da propriedade correspondente
+    let nameValue = nameInput.value
+    let jobValue = jobInput.value
 
     // Selecione os elementos aos quais os valores dos campos serão inseridos
+    let profileName = document.querySelector('.profile__info-title')
+    let profileJob = document.querySelector('.profile__info - paragraph')
 
-    // Insira novos valores usando a
-    // propriedade textContent
+    // Insira novos valores usando a propriedade textContent
+    profileName.textContent = nameValue
+    profileJob.textContent = jobValue
 }
 
 // Conecte o handler ao formulário:
 // ele vai observar o evento de submit
-formElement.addEventListener('submit', handleProfileFormSubmit) */
+formElement.addEventListener('submit', handleProfileFormSubmit)
