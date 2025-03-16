@@ -21,6 +21,9 @@ function handleProfileFormSubmit(evt) {
     let nameValue = nameInput.value
     let jobValue = jobInput.value
 
+    //Pegue o elmento popup  e close button
+    let popupElement = document.querySelector('.popup')
+
     // Selecione os elementos aos quais os valores dos campos serão inseridos
     let profileName = document.querySelector('.profile__info-title')
     let profileJob = document.querySelector('.profile__info-paragraph')
@@ -28,6 +31,9 @@ function handleProfileFormSubmit(evt) {
     // Insira novos valores usando a propriedade textContent
     profileName.textContent = nameValue
     profileJob.textContent = jobValue
+
+    // Remova o modificador popup-opened de popup
+    popupElement.classList.remove('popup_opened')
 }
 
 // Conecte o handler ao formulário:
