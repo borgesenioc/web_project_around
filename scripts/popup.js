@@ -20,3 +20,13 @@ editButton.addEventListener('click', addPopupOpenModifier)
 
 // Adicionar event listener no clique do botao fechar popup
 closeButton.addEventListener('click', removePopupOpenModifier)
+
+export function openPopup() {
+    const popup = document.querySelector('.popup')
+    popup.classList.add('popup-opened')
+}
+
+export function closePopup() {
+    const popup = document.querySelector('.popup')
+    popup.classList.remove('popup-opened')
+}
