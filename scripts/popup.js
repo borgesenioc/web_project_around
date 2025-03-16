@@ -6,13 +6,13 @@ let closeButton = document.querySelector('.popup__close')
 
 // Definidr a funcao que adiciona o modificador .popup-open de popup
 function addPopupOpenModifier() {
-    popupElement.classList.add('popup-opened')
+    popupElement.classList.add('popup_opened')
 }
 
 // Definir a funcao que remove o modificador .popup-open de popup
 
 function removePopupOpenModifier() {
-    popupElement.classList.remove('popup-opened')
+    popupElement.classList.remove('popup_opened')
 }
 
 // Adicionar event listener no clique do botao editar

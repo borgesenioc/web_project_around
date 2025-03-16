@@ -1,4 +1,4 @@
-// Vamos encontrar o formulário no DOM
+/* // Vamos encontrar o formulário no DOM
 let formElement = document.querySelector('popup__form') // Use o método querySelector()
 
 // Em seguida vem o handler do submit
@@ -27,4 +27,4 @@ function handleProfileFormSubmit(evt) {
 
 // Conecte o handler ao formulário:
 // ele vai observar o evento de submit
-formElement.addEventListener('submit', handleProfileFormSubmit)
+formElement.addEventListener('submit', handleProfileFormSubmit) */
