@@ -1,5 +1,5 @@
 // Vamos encontrar o formulário no DOM
-let formElement = document.querySelector('popup__form') // Use o método querySelector()
+let popupForm = document.querySelector('.popup__form') // Use o método querySelector()
 
 // Em seguida vem o handler do submit
 // ainda não vai enviar para lugar nenhum
@@ -23,7 +23,7 @@ function handleProfileFormSubmit(evt) {
 
     // Selecione os elementos aos quais os valores dos campos serão inseridos
     let profileName = document.querySelector('.profile__info-title')
-    let profileJob = document.querySelector('.profile__info - paragraph')
+    let profileJob = document.querySelector('.profile__info-paragraph')
 
     // Insira novos valores usando a propriedade textContent
     profileName.textContent = nameValue
@@ -32,4 +32,4 @@ function handleProfileFormSubmit(evt) {
 
 // Conecte o handler ao formulário:
 // ele vai observar o evento de submit
-formElement.addEventListener('submit', handleProfileFormSubmit)
+popupForm.addEventListener('submit', handleProfileFormSubmit)
