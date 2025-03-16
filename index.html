@@ -129,7 +129,7 @@
                 <p class="footer__paragraph">© 2024 Around The U.S.</p>
             </footer>
         </div>
-        <div class="popup popup_opened">
+        <div class="popup">
             <div class="popup__container">
                 <button class="popup__close"></button>
                 <h2 class="popup__form-title">Editar Perfil</h2>
@@ -137,12 +137,17 @@
                     <input
                         class="popup__form-input"
                         placeholder="Jacques Cousteau"
+                        id="form_name"
                     />
-                    <label class="popup__form-label"></label>
-                    <input class="popup__form-input" placeholder="Explorador" />
+                    <input
+                        class="popup__form-input"
+                        placeholder="Explorador"
+                        id="formJob"
+                    />
                     <button class="popup__button"></button>
                 </form>
             </div>
         </div>
+        <script src="./scripts/script.js"></script>
     </body>
 </html>
