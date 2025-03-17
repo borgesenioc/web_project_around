@@ -122,7 +122,8 @@
         grid-column: 2;
         grid-row: 1;
         align-self: center;
-        width: 18x;
+        justify-self: start;
+        width: 18px;
         height: 18px;
         background-color: black;
         padding: 0;
