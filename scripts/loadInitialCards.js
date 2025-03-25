@@ -47,4 +47,4 @@ const addInitialCards = (cards) => {
     }
 }
 
-addInitialCards(initiaCards)
+addInitialCards(initialCards)
