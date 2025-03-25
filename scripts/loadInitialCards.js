@@ -28,11 +28,9 @@ const initialCards = [
 const elementsContainer = document.querySelector('.elements')
 const cardTemplate = document.querySelector('#card').content
 
-const cardElement = cardTemplate.querySelector('.elements__card')
-
 const addInitialCards = (cards) => {
+    // add cards if container is empty
     if (!elementsContainer.hasChildNodes()) {
-        // add cards if container is empty
         cards.forEach((cardData) => {
             const cardClone = document.importNode(cardTemplate, true) // create a clone based on the template
             const cardImage = cardClone.querySelector('.elements__card-image')
@@ -42,7 +40,7 @@ const addInitialCards = (cards) => {
             )
             cardTitle.textContent = cardData.name
 
-            elementsContainer.append(cardClone)
+            elementsContainer.append(cardClone) // append the clone to the end of the container
         })
     }
 }
