@@ -40,76 +40,8 @@
                         <button class="profile__add-button"></button>
                     </div>
                 </section>
-                <section class="elements">
-                    <div class="elements__card">
-                        <img
-                            class="elements__card-image"
-                            src="./images/lake-louise.png"
-                        />
-                        <div class="elements__card-header">
-                            <p class="elements__card-header-title">
-                                Lago Louise
-                            </p>
-                            <button
-                                class="elements__card-header-like-button"
-                            ></button>
-                        </div>
-                    </div>
-                    <div class="elements__card">
-                        <img
-                            class="elements__card-image"
-                            src="./images/montanhas-care.png"
-                        />
-                        <div class="elements__card-header">
-                            <p class="elements__card-header-title">
-                                Montanhas Care...
-                            </p>
-                            <button
-                                class="elements__card-header-like-button"
-                            ></button>
-                        </div>
-                    </div>
-                    <div class="elements__card">
-                        <img
-                            class="elements__card-image"
-                            src="./images/latemar.png"
-                        />
-                        <div class="elements__card-header">
-                            <p class="elements__card-header-title">Latemar</p>
-                            <button
-                                class="elements__card-header-like-button"
-                            ></button>
-                        </div>
-                    </div>
-                    <div class="elements__card">
-                        <img
-                            class="elements__card-image"
-                            src="./images/parque-nacional.png"
-                        />
-                        <div class="elements__card-header">
-                            <p class="elements__card-header-title">
-                                Parque Nacional da Vanoise
-                            </p>
-                            <button
-                                class="elements__card-header-like-button"
-                            ></button>
-                        </div>
-                    </div>
-                    <div class="elements__card">
-                        <img
-                            class="elements__card-image"
-                            src="./images/lago-di-braies.png"
-                        />
-                        <div class="elements__card-header">
-                            <p class="elements__card-header-title">
-                                Lago di Braies
-                            </p>
-                            <button
-                                class="elements__card-header-like-button"
-                            ></button>
-                        </div>
-                    </div>
-                </section>
+                <!-- Default cards added dynamically by loadInitianCards.js -->
+                <section class="elements"></section>
             </main>
             <footer class="footer">
                 <p class="footer__paragraph">© 2024 Around The U.S.</p>
@@ -136,8 +68,29 @@
                 </form>
             </div>
         </div>
+        <div class="popup-card">
+            <div class="popup-card__container">
+                <button class="popup-card__close"></button>
+                <h2 class="popup-card__form-title">Novo Local</h2>
+                <form class="popup__form">
+                    <input
+                        class="popup-card__form-input"
+                        placeholder="Título"
+                        id="cardName"
+                        name="locationName"
+                    />
+                    <input
+                        class="popup-card__form-input"
+                        placeholder="Link da Imagem"
+                        id="cardLink"
+                        link="cardURL"
+                    />
+                    <button class="popup-card__button"></button>
+                </form>
+            </div>
+        </div>
         <script type="module" src="./scripts/index.js"></script>
-        <template>
+        <template id="card">
             <div class="elements__card">
                 <img class="elements__card-image" src="./images/replace-this" />
                 <div class="elements__card-header">
