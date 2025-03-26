@@ -35,23 +35,15 @@ const addCard = (card) => {
     let cardTitle = cardClone.querySelector('.elements__card-header-title')
     cardTitle.textContent = card.name
 
-    elementsContainer.append(cardClone) // append the clone to the end of the container
+    elementsContainer.prepend(cardClone) // append the clone to the end of the container
 }
 
 const addInitialCards = (cards) => {
-    // add cards if container is empty
+    // adds initialCards if cards container is empty
     if (!elementsContainer.hasChildNodes()) {
-        cards.forEach((cardData) => {
-            let cardClone = document.importNode(cardTemplate, true) // create a clone based on the template
-            let cardImage = cardClone.querySelector('.elements__card-image')
-            cardImage.src = cardData.link
-            let cardTitle = cardClone.querySelector(
-                '.elements__card-header-title'
-            )
-            cardTitle.textContent = cardData.name
-
-            elementsContainer.append(cardClone) // append the clone to the end of the container
-        })
+        for (let i = cards.length - 1; i >= 0; i--) {
+            addCard(cards[i])
+        }
     }
 }
 
