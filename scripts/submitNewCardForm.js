@@ -29,5 +29,4 @@ function handleCardFormSubmit(evt) {
 // ele vai observar o evento de submit
 popupCardForm.addEventListener('submit', handleProfileFormSubmit)
 
-// falta dizer que ao clicar no + o popup abre
 // falta dizer que cada submit pega os valores do template a cria um clone

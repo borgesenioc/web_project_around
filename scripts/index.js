@@ -1,4 +1,5 @@
+import './loadInitialCards.js'
 import './popup.js'
 import './popup-card.js'
 import './submitProfileForm.js'
-import './loadInitialCards.js'
+import './submitNewCardForm.js'
