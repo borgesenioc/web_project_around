@@ -15,6 +15,7 @@
 }
 
 .elements__card {
+    position: relative;
     margin: 0;
     padding: 0;
     background-color: white;
@@ -36,16 +37,24 @@
 
 .elements__card-trash-button {
     background-image: url('../images/trash-inactive.svg');
+    position: absolute;
+    top: 18px;
+    right: 15px;
     background-repeat: no-repeat;
+    background-color: transparent;
     background-position: center;
     background-size: contain;
-
     border: none;
-    justify-self: baseline;
-    width: 21px;
-    height: 19px;
+    justify-self: flex-end;
+    width: 18px;
+    height: 19.3px;
     margin: 0;
     padding: 0;
+    z-index: 4;
+}
+
+.elements__card-trash-button:hover {
+    background-image: url('../images/trash-active.svg');
 }
 
 .elements__card-header {
@@ -92,7 +101,7 @@
     background-image: url('../images/like-button-active.png');
 }
 
-.elements__card-header-like-button .elements__card-header-like-button:hover {
+.elements__card-header-like-button:hover {
     background-image: url('../images/like-button-hover.svg');
 }
 
