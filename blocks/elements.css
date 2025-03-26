@@ -34,6 +34,20 @@
     padding: 0;
 }
 
+.elements__card-trash-button {
+    background-image: url('../images/trash-inactive.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    border: none;
+    justify-self: baseline;
+    width: 21px;
+    height: 19px;
+    margin: 0;
+    padding: 0;
+}
+
 .elements__card-header {
     padding: 0;
     margin: 0;
