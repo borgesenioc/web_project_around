@@ -74,7 +74,11 @@
     grid-template-columns: 2;
 }
 
-.elements__card-header-like-button:hover {
+.likeButtonClicked {
+    background-image: url('../images/like-button-active.png');
+}
+
+.elements__card-header-like-button .elements__card-header-like-button:hover {
     background-image: url('../images/like-button-hover.svg');
 }
 
