@@ -61,8 +61,11 @@
 }
 
 @media screen and (max-width: 800px) {
-    .popup-card__container {
-        width: 282px;
+    .popup-image__trash-button {
+        width: 30px;
+        height: 30px;
+        top: -30px;
+        right: -30px;
     }
 
     .popup-card__close {
@@ -83,13 +86,5 @@
         width: 238px;
         font-size: 14px;
         gap: 18px;
-    }
-    .popup-card__button {
-        margin-top: 32px;
-        width: 238px;
-        height: 46px;
-
-        background-position: center;
-        background-repeat: no-repeat;
     }
 }
