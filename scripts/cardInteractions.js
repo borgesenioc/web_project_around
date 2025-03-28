@@ -34,11 +34,11 @@ deleteButtons.forEach((button) => {
 
 // make the image clickable
 
-// create a popup template with the whole image
+// create a popup template with the whole image DONE
 
-// add exclude button
+// add exclude button DONE
 
-// add css element that displays the image
+// add css element that displays the image DONE
 
 // add js script that listens and crates the popup the image
 
