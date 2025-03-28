@@ -30,10 +30,23 @@ const createImageHighlight = (evt) => {
     highlightParagraph.textContent = evt.target.parentElement.querySelector(
         '.elements__card-header-title'
     ).textContent
+
     document.body.appendChild(imageHighlight)
+
+    let imageHighlightDeleteButton = document.querySelector(
+        '.popup-image__trash-button'
+    )
+    // listener for the image hightlight delete button
+    imageHighlightDeleteButton.addEventListener('click', (evt) => {
+        deleteImageHighlight(evt)
+    })
 }
 
 // method that deletes the image popup on click
+
+const deleteImageHighlight = (evt) => {
+    evt.target.closest('.popup-image').remove()
+}
 
 // listener for the parent of like buttons
 elementsContainer.addEventListener('click', (evt) => {
@@ -55,15 +68,3 @@ clickableImages.forEach((button) => {
         createImageHighlight(evt)
     })
 })
-
-// make the image clickable DONE
-
-// create a popup template with the whole image DONE
-
-// add exclude button DONE
-
-// add css element that displays the image DONE
-
-// add js script that listens and crates the popup the image
-
-// add js script that listens and deletes the element
