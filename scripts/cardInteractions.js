@@ -2,7 +2,9 @@ import { elementsContainer } from './loadInitialCards.js'
 
 let deleteButtons = document.querySelectorAll('.elements__card-trash-button')
 
-let clickableImages = document.querySelectorAll('.elements__card-image')
+let clickableImages = document.querySelectorAll('.elements__card-image-button')
+
+let imageTemplate = document.querySelector('#image-highlight').content
 
 // method that toggles a css modifier on the like button
 function toggleLikeButton(evt) {
@@ -15,8 +17,36 @@ const deleteCard = (evt) => {
 }
 
 // method that creates an image popup on click
+const createImageHighlight = (evt) => {
+    let imageHighlight = document.importNode(imageTemplate, true) // creates the image popup from the image highlight template
+    let highlightImage = imageHighlight.querySelector('.popup-image__highlight')
+    highlightImage.src = evt.target.parentElement.querySelector(
+        '.elements__card-image'
+    ).src
+
+    let highlightParagraph = imageHighlight.querySelector(
+        '.popup-image__paragraph'
+    )
+    highlightParagraph.textContent = evt.target.parentElement.querySelector(
+        '.elements__card-header-title'
+    ).textContent
+
+    document.body.appendChild(imageHighlight)
+
+    let imageHighlightDeleteButton = document.querySelector(
+        '.popup-image__trash-button'
+    )
+    // listener for the image hightlight delete button
+    imageHighlightDeleteButton.addEventListener('click', (evt) => {
+        deleteImageHighlight(evt)
+    })
+}
 
 // method that deletes the image popup on click
+
+const deleteImageHighlight = (evt) => {
+    evt.target.closest('.popup-image').remove()
+}
 
 // listener for the parent of like buttons
 elementsContainer.addEventListener('click', (evt) => {
@@ -32,14 +62,9 @@ deleteButtons.forEach((button) => {
     })
 })
 
-// make the image clickable
-
-// create a popup template with the whole image
-
-// add exclude button
-
-// add css element that displays the image
-
-// add js script that listens and crates the popup the image
-
-// add js script that listens and deletes the element
+// a listener for each image
+clickableImages.forEach((button) => {
+    button.addEventListener('click', (evt) => {
+        createImageHighlight(evt)
+    })
+})

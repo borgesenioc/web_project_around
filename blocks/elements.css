@@ -57,6 +57,20 @@
     background-image: url('../images/trash-active.svg');
 }
 
+.elements__card-image-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 282px;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+}
+
 .elements__card-header {
     padding: 0;
     margin: 0;
