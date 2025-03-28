@@ -68,23 +68,7 @@
         right: -30px;
     }
 
-    .popup-card__close {
-        width: 26px;
-        height: 26px;
-        background: cover;
-        right: 0;
-    }
-    .popup-card__form-title {
-        font-size: 18px;
-        margin: 30px 0 0;
-        padding: 0;
-        width: 238px;
-    }
-
-    .popup-card__form {
-        margin-top: 75px;
-        width: 238px;
-        font-size: 14px;
-        gap: 18px;
+    .popup-image__paragraph {
+        bottom: -30px;
     }
 }
