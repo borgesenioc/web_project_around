@@ -2,8 +2,6 @@ import { elementsContainer } from './loadInitialCards.js'
 
 let deleteButtons = document.querySelectorAll('.elements__card-trash-button')
 
-let clickableImages = document.querySelectorAll('.elements__card-image-button')
-
 let imageTemplate = document.querySelector('#image-highlight').content
 
 // method that toggles a css modifier on the like button
@@ -65,8 +63,8 @@ deleteButtons.forEach((button) => {
 })
 
 // a listener for each image
-clickableImages.forEach((button) => {
-    button.addEventListener('click', (evt) => {
+elementsContainer.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('elements__card-image-button')) {
         createImageHighlight(evt)
-    })
+    }
 })
