@@ -34,6 +34,7 @@ const addCard = (card) => {
     cardImage.src = card.link
     let cardTitle = cardClone.querySelector('.elements__card-header-title')
     cardTitle.textContent = card.name
+    cardImage.alt = card.name
 
     elementsContainer.prepend(cardClone) // append the clone to the end of the container
 }
@@ -41,9 +42,12 @@ const addCard = (card) => {
 const addInitialCards = (cards) => {
     // adds initialCards if cards container is empty
     if (!elementsContainer.hasChildNodes()) {
-        for (let i = cards.length - 1; i >= 0; i--) {
-            addCard(cards[i])
-        }
+        cards
+            .slice()
+            .reverse()
+            .forEach((card) => {
+                addCard(card)
+            })
     }
 }
 
