@@ -34,6 +34,7 @@ const addCard = (card) => {
     cardImage.src = card.link
     let cardTitle = cardClone.querySelector('.elements__card-header-title')
     cardTitle.textContent = card.name
+    cardImage.alt = card.name
 
     elementsContainer.prepend(cardClone) // append the clone to the end of the container
 }
