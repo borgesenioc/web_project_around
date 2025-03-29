@@ -42,9 +42,12 @@ const addCard = (card) => {
 const addInitialCards = (cards) => {
     // adds initialCards if cards container is empty
     if (!elementsContainer.hasChildNodes()) {
-        for (let i = cards.length - 1; i >= 0; i--) {
-            addCard(cards[i])
-        }
+        cards
+            .slice()
+            .reverse()
+            .forEach((card) => {
+                addCard(card)
+            })
     }
 }
 
