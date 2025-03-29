@@ -31,6 +31,8 @@ const createImageHighlight = (evt) => {
         '.elements__card-header-title'
     ).textContent
 
+    highlightImage.alt = highlightParagraph.textContent
+
     document.body.appendChild(imageHighlight)
 
     let imageHighlightDeleteButton = document.querySelector(
