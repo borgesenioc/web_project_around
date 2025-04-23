@@ -78,6 +78,10 @@
     border-bottom: 1px solid #bfbfbf;
 }
 
+.form__input_type_error {
+    border-bottom-color: red;
+}
+
 .popup__form-input:focus::placeholder {
     opacity: 0;
 }
@@ -89,6 +93,13 @@
     height: 50.15px;
     border-radius: 2px;
     background-image: url('../images/submit-button.png');
+}
+
+.popup__button_disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+    filter: grayscale(100%);
 }
 
 @media screen and (max-width: 800px) {
