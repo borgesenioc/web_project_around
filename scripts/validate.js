@@ -4,12 +4,12 @@ const profileFormInput = profileFormElement.querySelector('.popup__form-input')
 
 // Show error element
 const showInputError = (element) => {
-    element.classList.add('form__input_type_error')
+    element.classList.add('popup__input_type_error')
 }
 
 // Hide error element
 const hideInputError = (element) => {
-    element.classList.remove('form__input_type_error')
+    element.classList.remove('popup__input_type_error')
 }
 
 // Check if the input is valid
