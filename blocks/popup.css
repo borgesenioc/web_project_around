@@ -69,13 +69,17 @@
     line-height: 1;
 }
 
-.popup__form-input {
+.popup__input {
     margin: 0;
     padding: 0;
     padding-bottom: 8px;
     border: none;
     outline: none;
     border-bottom: 1px solid #bfbfbf;
+}
+
+.popup__input_type_error {
+    border-bottom-color: red;
 }
 
 .popup__form-input:focus::placeholder {
@@ -89,6 +93,13 @@
     height: 50.15px;
     border-radius: 2px;
     background-image: url('../images/submit-button.png');
+}
+
+.popup__button_disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+    filter: grayscale(100%);
 }
 
 @media screen and (max-width: 800px) {
