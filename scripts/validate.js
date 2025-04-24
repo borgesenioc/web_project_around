@@ -2,7 +2,7 @@ function getErrorMessage(input) {
     const v = input.validity
 
     if (v.valueMissing) {
-        return 'Preencha este campo.'
+        return 'Preencha esse campo.'
     }
 
     if (v.tooShort) {
@@ -14,7 +14,7 @@ function getErrorMessage(input) {
     }
 
     if (v.typeMismatch && input.type === 'url') {
-        return 'Por favor, indira um endereço web.'
+        return 'Por favor, insira um endereço web.'
     }
 
     if (v.patternMismatch) {

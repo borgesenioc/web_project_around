@@ -15,6 +15,12 @@ function removePopupOpenModifier() {
     popupElement.classList.remove('popup_opened')
 }
 
+popupElement.addEventListener('mousedown', (evt) => {
+    if (evt.target === popupElement) {
+        removePopupOpenModifier()
+    }
+})
+
 // Adicionar event listener no clique do botao editar
 editButton.addEventListener('click', addPopupOpenModifier)
 

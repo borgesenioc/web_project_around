@@ -9,6 +9,12 @@ function removePopupOpenModifier() {
     popupCardElement.classList.remove('popup_opened')
 }
 
+popupCardElement.addEventListener('mousedown', (evt) => {
+    if (evt.target === popupCardElement) {
+        removePopupOpenModifier()
+    }
+})
+
 addCardButton.addEventListener('click', addPopupOpenModifier)
 
 closeCardButton.addEventListener('click', removePopupOpenModifier)
