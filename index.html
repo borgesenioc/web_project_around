@@ -51,26 +51,33 @@
             <div class="popup__container">
                 <button class="popup__close"></button>
                 <h2 class="popup__form-title">Edit the profile</h2>
-                <form class="popup__form">
+                <form class="popup__form" novalidate>
                     <input
                         class="popup__input"
                         placeholder="Jacques Cousteau"
                         id="formName"
                         name="profileName"
+                        type="text"
                         minlength="2"
                         maxlength="40"
                         required
                     />
+                    <span class="popup__error" id="formName-error"></span>
                     <input
                         class="popup__input"
                         placeholder="Explorador"
                         id="formJob"
                         name="profileJob"
+                        type="text"
                         minlength="2"
                         maxlength="200"
                         required
                     />
-                    <button class="popup__button" type="submit"></button>
+                    <span class="popup__error" id="formJob-error"></span>
+                    <button
+                        class="popup__button popup__button_disabled"
+                        type="submit"
+                    ></button>
                 </form>
             </div>
         </div>
@@ -84,14 +91,22 @@
                         placeholder="Título"
                         id="cardName"
                         name="locationName"
+                        type="text"
+                        minlength="2"
+                        maxlength="30"
+                        required
                     />
+                    <span class="popup__error" id="cardName-error"></span>
                     <input
                         class="popup-card__form-input"
                         placeholder="Link da Imagem"
                         id="cardLink"
                         link="cardURL"
+                        type="url"
+                        required
                     />
-                    <button class="popup-card__button"></button>
+                    <span class="popup__error" id="cardLink-error"></span>
+                    <button class="popup__button"></button>
                 </form>
             </div>
         </div>

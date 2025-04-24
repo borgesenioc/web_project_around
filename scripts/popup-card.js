@@ -1,24 +1,18 @@
-let addCardButton = document.querySelector('.profile__add-button')
-let popupCardElement = document.querySelector('.popup-card')
-let closeCardButton = document.querySelector('.popup-card__close')
+// handlers from helper module
+import { openPopup, closePopup } from './utils-popup.js'
 
-function addPopupOpenModifier() {
-    popupCardElement.classList.add('popup_opened')
-}
-function removePopupOpenModifier() {
-    popupCardElement.classList.remove('popup_opened')
-}
+// DOM references
+const addCardButton = document.querySelector('.profile__add-button')
+const popupCard = document.querySelector('.popup-card')
+const closeCardButton = popupCard.querySelector('.popup-card__close')
 
-addCardButton.addEventListener('click', addPopupOpenModifier)
+// handle opens
+addCardButton.addEventListener('click', () => openPopup(popupCard))
 
-closeCardButton.addEventListener('click', removePopupOpenModifier)
+// handle closes with the X button
+closeCardButton.addEventListener('click', () => closePopup(popupCard))
 
-export function openPopup() {
-    const popup = document.querySelector('.popup-card')
-    popup.classList.add('popup-opened')
-}
-
-export function closePopup() {
-    const popup = document.querySelector('.popup-card')
-    popup.classList.remove('popup-opened')
-}
+// handle overlay clicks
+popupCard.addEventListener('mousedown', (evt) => {
+    if (evt.target === popupCard) closePopup(popupCard)
+})

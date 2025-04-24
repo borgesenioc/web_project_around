@@ -1,77 +1,91 @@
-// Create validation functions for the profile edit form
-const profileFormElement = document.querySelector('.popup__form')
-const profileFormInput = profileFormElement.querySelector('.popup__form-input')
+function getErrorMessage(input) {
+    const v = input.validity
 
-// Show error element
-const showInputError = (element) => {
-    element.classList.add('popup__input_type_error')
-}
-
-// Hide error element
-const hideInputError = (element) => {
-    element.classList.remove('popup__input_type_error')
-}
-
-// Check if the input is valid
-const isValid = () => {
-    if (!profileFormInput.validity.valid) {
-        showInputError(profileFormInput)
-    } else {
-        hideInputError(profileFormInput)
+    if (v.valueMissing) {
+        return 'Preencha esse campo.'
     }
+
+    if (v.tooShort) {
+        return `Digite pelo menos ${input.minLength} caracteres. (atual: ${input.value.length})`
+    }
+
+    if (v.tooLong) {
+        return `Digite no máximo ${input.maxLength} caracteres.`
+    }
+
+    if (v.typeMismatch && input.type === 'url') {
+        return 'Por favor, insira um endereço web.'
+    }
+
+    if (v.patternMismatch) {
+        return 'Formato inválido.'
+    }
+
+    return 'Valor inválido.'
 }
 
-// Cancel the default browser behavior
-profileFormElement.addEventListener('submit', function (evt) {
-    evt.preventDefault()
-})
-
-profileFormInput.addEventListener('input', isValid)
-
-// Create the enableValidation function
-
-function enableValidation(config) {
-    const forms = Array.from(document.querySelectorAll(config.formSelector))
+export function enableValidation({
+    formSelector,
+    inputSelector,
+    submitButtonSelector,
+    inactiveButtonClass,
+    inputErrorClass,
+    errorClass,
+}) {
+    const forms = Array.from(document.querySelectorAll(formSelector))
 
     forms.forEach((form) => {
-        const inputs = Array.from(form.querySelectorAll(config.inputSelector))
-        const button = form.querySelector(config.submitButtonSelector)
+        const inputs = Array.from(form.querySelectorAll(inputSelector))
+        const button = form.querySelector(submitButtonSelector)
 
-        function toggleButtonState() {
-            const isFormValid = inputs.every((input) => input.validity.valid)
-            if (!isFormValid) {
-                button.classList.add(config.inactiveButtonClass)
-                button.disabled = true
-            } else {
-                button.classList.remove(config.inactiveButtonClass)
-                button.disabled = false
-            }
+        /** Mostra mensagem + borda vermelha */
+        const showError = (input) => {
+            const errorElem = form.querySelector(`#${input.id}-error`)
+            if (!errorElem) return // span ausente → ignora
+
+            errorElem.textContent = getErrorMessage(input)
+            input.classList.add(inputErrorClass)
+            errorElem.classList.add(errorClass)
         }
 
-        function handleInput(input) {
-            if (!input.validity.valid) {
-                input.classList.add(config.inputErrorClass)
-            } else {
-                input.classList.remove(config.inputErrorClass)
-            }
+        /** Oculta mensagem + remove borda */
+        const hideError = (input) => {
+            const errorElem = form.querySelector(`#${input.id}-error`)
+            if (!errorElem) return
+
+            errorElem.textContent = ''
+            input.classList.remove(inputErrorClass)
+            errorElem.classList.remove(errorClass)
+        }
+
+        /** Habilita / desabilita o botão de submit */
+        const toggleButtonState = () => {
+            const formValid = inputs.every((i) => i.validity.valid)
+            button.disabled = !formValid
+            button.classList.toggle(inactiveButtonClass, !formValid)
+        }
+
+        /** Handler único para todos os inputs do form */
+        const handleInput = (evt) => {
+            const input = evt.target
+            input.validity.valid ? hideError(input) : showError(input)
             toggleButtonState()
         }
 
-        inputs.forEach((input) => {
-            input.addEventListener('input', () => handleInput(input))
-        })
+        // listeners
+        inputs.forEach((input) => input.addEventListener('input', handleInput))
 
-        // Initial state
+        // estado inicial quando o pop-up é aberto
+        inputs.forEach((input) =>
+            input.validity.valid ? hideError(input) : showError(input)
+        )
         toggleButtonState()
     })
 }
 
-// Habilitando a validação chamando enableValidation()
-// Valide todas as configurações
-
 enableValidation({
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
+    formSelector: '.popup__form, .popup-card__form', // ambos os formulários
+    inputSelector: '.popup__input, .popup-card__form-input',
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',
