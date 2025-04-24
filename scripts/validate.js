@@ -1,79 +1,39 @@
-// Create validation functions for the profile edit form
-const profileFormElement = document.querySelector('.popup__form')
-const profileFormInput = profileFormElement.querySelector('.popup__form-input')
-
-// Show error element
-const showInputError = (element) => {
-    element.classList.add('popup__input_type_error')
-}
-
-// Hide error element
-const hideInputError = (element) => {
-    element.classList.remove('popup__input_type_error')
-}
-
-// Check if the input is valid
-const isValid = () => {
-    if (!profileFormInput.validity.valid) {
-        showInputError(profileFormInput)
-    } else {
-        hideInputError(profileFormInput)
-    }
-}
-
-// Cancel the default browser behavior
-profileFormElement.addEventListener('submit', function (evt) {
-    evt.preventDefault()
-})
-
-profileFormInput.addEventListener('input', isValid)
-
-// Create the enableValidation function
-
-function enableValidation(config) {
-    const forms = Array.from(document.querySelectorAll(config.formSelector))
+// validate.js
+export function enableValidation({
+    formSelector,
+    inputSelector,
+    submitButtonSelector,
+    inactiveButtonClass,
+    inputErrorClass,
+}) {
+    const forms = [...document.querySelectorAll(formSelector)]
 
     forms.forEach((form) => {
-        const inputs = Array.from(form.querySelectorAll(config.inputSelector))
-        const button = form.querySelector(config.submitButtonSelector)
+        const inputs = [...form.querySelectorAll(inputSelector)]
+        const button = form.querySelector(submitButtonSelector)
 
-        function toggleButtonState() {
-            const isFormValid = inputs.every((input) => input.validity.valid)
-            if (!isFormValid) {
-                button.classList.add(config.inactiveButtonClass)
-                button.disabled = true
-            } else {
-                button.classList.remove(config.inactiveButtonClass)
-                button.disabled = false
-            }
-        }
-
-        function handleInput(input) {
-            if (!input.validity.valid) {
-                input.classList.add(config.inputErrorClass)
-            } else {
-                input.classList.remove(config.inputErrorClass)
-            }
-            toggleButtonState()
+        const toggleButtonState = () => {
+            const formValid = inputs.every((i) => i.validity.valid)
+            button.disabled = !formValid
+            button.classList.toggle(inactiveButtonClass, !formValid)
         }
 
         inputs.forEach((input) => {
-            input.addEventListener('input', () => handleInput(input))
+            input.addEventListener('input', () => {
+                input.classList.toggle(inputErrorClass, !input.validity.valid)
+                toggleButtonState()
+            })
         })
 
-        // Initial state
-        toggleButtonState()
+        toggleButtonState() // initial state
     })
 }
 
-// Habilitando a validação chamando enableValidation()
-// Valide todas as configurações
-
+// ONE call is enough once the class names line up
 enableValidation({
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible',
 })
