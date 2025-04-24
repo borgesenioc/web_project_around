@@ -1,38 +1,18 @@
-// Abrir o popup form ao clicar no botao editar do perfil
-// Definir os elementos envolvidos
-let editButton = document.querySelector('.profile__info-edit-button')
-let popupElement = document.querySelector('.popup')
-let closeButton = document.querySelector('.popup__close')
+// handlers from helper module
+import { openPopup, closePopup } from './utils-popup.js'
 
-// Definidr a funcao que adiciona o modificador .popup-open de popup
-function addPopupOpenModifier() {
-    popupElement.classList.add('popup_opened')
-}
+// DOM references
+const editProfileButton = document.querySelector('.profile__info-edit-button')
+const popupProfile = document.querySelector('.popup')
+const closeProfileBtn = popupProfile.querySelector('.popup__close')
 
-// Definir a funcao que remove o modificador .popup-open de popup
+// handle opens
+editProfileButton.addEventListener('click', () => openPopup(popupProfile))
 
-function removePopupOpenModifier() {
-    popupElement.classList.remove('popup_opened')
-}
+// handle closes with the X button
+closeProfileBtn.addEventListener('click', () => closePopup(popupProfile))
 
-popupElement.addEventListener('mousedown', (evt) => {
-    if (evt.target === popupElement) {
-        removePopupOpenModifier()
-    }
+// handle overlay clicks
+popupProfile.addEventListener('mousedown', (evt) => {
+    if (evt.target === popupProfile) closePopup(popupProfile)
 })
-
-// Adicionar event listener no clique do botao editar
-editButton.addEventListener('click', addPopupOpenModifier)
-
-// Adicionar event listener no clique do botao fechar popup
-closeButton.addEventListener('click', removePopupOpenModifier)
-
-export function openPopup() {
-    const popup = document.querySelector('.popup')
-    popup.classList.add('popup-opened')
-}
-
-export function closePopup() {
-    const popup = document.querySelector('.popup')
-    popup.classList.remove('popup-opened')
-}
