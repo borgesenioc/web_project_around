@@ -57,6 +57,7 @@
                         placeholder="Jacques Cousteau"
                         id="formName"
                         name="profileName"
+                        type="text"
                         minlength="2"
                         maxlength="40"
                         required
@@ -67,6 +68,7 @@
                         placeholder="Explorador"
                         id="formJob"
                         name="profileJob"
+                        type="text"
                         minlength="2"
                         maxlength="200"
                         required
@@ -89,6 +91,10 @@
                         placeholder="Título"
                         id="cardName"
                         name="locationName"
+                        type="text"
+                        minlength="2"
+                        maxlength="30"
+                        required
                     />
                     <span class="popup__error" id="cardName-error"></span>
                     <input
@@ -96,6 +102,8 @@
                         placeholder="Link da Imagem"
                         id="cardLink"
                         link="cardURL"
+                        type="url"
+                        required
                     />
                     <span class="popup__error" id="cardLink-error"></span>
                     <button class="popup__button"></button>

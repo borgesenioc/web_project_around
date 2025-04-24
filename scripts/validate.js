@@ -14,11 +14,7 @@ function getErrorMessage(input) {
     }
 
     if (v.typeMismatch && input.type === 'url') {
-        return 'Insira um URL válido.'
-    }
-
-    if (v.typeMismatch && input.type === 'email') {
-        return 'Insira um e-mail válido.'
+        return 'Por favor, indira um endereço web.'
     }
 
     if (v.patternMismatch) {
