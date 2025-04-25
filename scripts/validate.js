@@ -38,10 +38,10 @@ export function enableValidation({
         const inputs = Array.from(form.querySelectorAll(inputSelector))
         const button = form.querySelector(submitButtonSelector)
 
-        /** Mostra mensagem + borda vermelha */
+        /** red border bottom */
         const showError = (input) => {
             const errorElem = form.querySelector(`#${input.id}-error`)
-            if (!errorElem) return // span ausente → ignora
+            if (!errorElem) return
 
             errorElem.textContent = getErrorMessage(input)
             input.classList.add(inputErrorClass)
@@ -75,16 +75,24 @@ export function enableValidation({
         // listeners
         inputs.forEach((input) => input.addEventListener('input', handleInput))
 
-        // estado inicial quando o pop-up é aberto
-        inputs.forEach((input) =>
-            input.validity.valid ? hideError(input) : showError(input)
-        )
+        // treating the initial state as acceptable
+        inputs.forEach((input) => {
+            const hasValue = input.value.length > 0
+
+            if (!hasValue) {
+                hideError(input)
+            } else if (!input.validity.valid) {
+                showError(input)
+            } else {
+                hideError(input)
+            }
+        })
         toggleButtonState()
     })
 }
 
 enableValidation({
-    formSelector: '.popup__form, .popup-card__form', // ambos os formulários
+    formSelector: '.popup__form, .popup-card__form', // both forms
     inputSelector: '.popup__input, .popup-card__form-input',
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
