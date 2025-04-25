@@ -1,70 +1,74 @@
+// scripts/cardInteractions.js
+// -------------------------------------------------------------
+//  Card “like”, “delete”, and “image-highlight” interactions
+// -------------------------------------------------------------
+
 import { elementsContainer } from './loadInitialCards.js'
+import { openPopup, closePopup } from './utils-popup.js'
 
-let deleteButtons = document.querySelectorAll('.elements__card-trash-button')
+/* ---------- constants ---------- */
+const imageTemplate = document
+    .querySelector('#image-highlight')
+    .content // <template> fragment
+    .cloneNode.bind(document.querySelector('#image-highlight').content, true) // helper
 
-let imageTemplate = document.querySelector('#image-highlight').content
-
-// method that toggles a css modifier on the like button
+/* ---------- helpers ---------- */
 function toggleLikeButton(evt) {
     evt.target.classList.toggle('likeButtonClicked')
 }
 
-// method that deletes a card on click
-const deleteCard = (evt) => {
-    evt.target.parentNode.remove()
+function deleteCard(evt) {
+    // remove the whole card
+    const card = evt.target.closest('.elements__card')
+    if (card) card.remove()
 }
 
-// method that creates an image popup on click
-const createImageHighlight = (evt) => {
-    let imageHighlight = document.importNode(imageTemplate, true) // creates the image popup from the image highlight template
-    let highlightImage = imageHighlight.querySelector('.popup-image__highlight')
-    highlightImage.src = evt.target.parentElement.querySelector(
-        '.elements__card-image'
-    ).src
+function createImageHighlight(evt) {
+    // 1. clone the template
+    const fragment = imageTemplate()
+    const popupImage = fragment.querySelector('.popup')
+    const highlightImg = popupImage.querySelector('.popup-image__highlight')
+    const highlightTxt = popupImage.querySelector('.popup-image__paragraph')
 
-    let highlightParagraph = imageHighlight.querySelector(
-        '.popup-image__paragraph'
-    )
-    highlightParagraph.textContent = evt.target.parentElement.querySelector(
+    // 2. pull data from the clicked card
+    const card = evt.target.closest('.elements__card')
+    highlightImg.src = card.querySelector('.elements__card-image').src
+    highlightTxt.textContent = card.querySelector(
         '.elements__card-header-title'
     ).textContent
+    highlightImg.alt = highlightTxt.textContent
 
-    highlightImage.alt = highlightParagraph.textContent
+    // 3. inject into DOM and open
+    document.body.appendChild(fragment)
+    openPopup(popupImage)
 
-    document.body.appendChild(imageHighlight)
+    // 4. close actions
+    popupImage
+        .querySelector('.popup-image__close')
+        .addEventListener('click', handleClose)
 
-    let imageHighlightDeleteButton = document.querySelector(
-        '.popup-image__trash-button'
-    )
-    // listener for the image hightlight delete button
-    imageHighlightDeleteButton.addEventListener('click', (evt) => {
-        deleteImageHighlight(evt)
-    })
+    popupImage.addEventListener('mousedown', overlayClose)
+
+    function handleClose() {
+        overlayClose() // reuse same clean-up
+    }
+
+    function overlayClose(evt) {
+        if (!evt || evt.target === popupImage) {
+            closePopup(popupImage)
+            popupImage.remove() // keep DOM tidy
+            popupImage.removeEventListener('mousedown', overlayClose)
+        }
+    }
 }
 
-// method that deletes the image popup on click
-
-const deleteImageHighlight = (evt) => {
-    evt.target.closest('.popup-image').remove()
-}
-
-// listener for the parent of like buttons
+/* ---------- one delegation listener for the whole list ---------- */
 elementsContainer.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('elements__card-header-like-button')) {
         toggleLikeButton(evt)
-    }
-})
-
-// a listener for each delete button
-deleteButtons.forEach((button) => {
-    button.addEventListener('click', (evt) => {
+    } else if (evt.target.classList.contains('elements__card-trash-button')) {
         deleteCard(evt)
-    })
-})
-
-// a listener for each image
-elementsContainer.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('elements__card-image-button')) {
+    } else if (evt.target.classList.contains('elements__card-image-button')) {
         createImageHighlight(evt)
     }
 })
