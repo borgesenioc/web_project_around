@@ -1,23 +1,9 @@
-// FormValidator.js
-
 export class FormValidator {
-    // Private fields
     #config
     #formElement
     #inputList
     #buttonElement
 
-    /**
-     * @param {Object} config – validation settings:
-     *   {
-     *     inputSelector: string,
-     *     submitButtonSelector: string,
-     *     inactiveButtonClass: string,
-     *     inputErrorClass: string,
-     *     errorClass: string
-     *   }
-     * @param {HTMLFormElement} formElement – the form to validate
-     */
     constructor(config, formElement) {
         this.#config = config
         this.#formElement = formElement
@@ -29,56 +15,54 @@ export class FormValidator {
         )
     }
 
-    // Show error message for a single input
-    #showInputError(inputElement) {
-        const errorElem = this.#formElement.querySelector(
+    // Private: show error message and style
+    #showInputError(inputElement, errorMessage) {
+        const errorElement = this.#formElement.querySelector(
             `#${inputElement.id}-error`
         )
         inputElement.classList.add(this.#config.inputErrorClass)
-        if (errorElem) {
-            errorElem.textContent = inputElement.validationMessage
-            errorElem.classList.add(this.#config.errorClass)
-        }
+        errorElement.textContent = errorMessage
+        errorElement.classList.add(this.#config.errorClass)
     }
 
-    // Hide error message for a single input
+    // Private: hide error message and style
     #hideInputError(inputElement) {
-        const errorElem = this.#formElement.querySelector(
+        const errorElement = this.#formElement.querySelector(
             `#${inputElement.id}-error`
         )
         inputElement.classList.remove(this.#config.inputErrorClass)
-        if (errorElem) {
-            errorElem.textContent = ''
-            errorElem.classList.remove(this.#config.errorClass)
-        }
+        errorElement.textContent = ''
+        errorElement.classList.remove(this.#config.errorClass)
     }
 
-    // Check validity and show/hide error accordingly
+    // Private: check input validity
     #checkInputValidity(inputElement) {
         if (!inputElement.validity.valid) {
-            this.#showInputError(inputElement)
+            this.#showInputError(inputElement, inputElement.validationMessage)
         } else {
             this.#hideInputError(inputElement)
         }
     }
 
-    // Toggle the submit button enabled/disabled state
+    // Private: toggle submit button state
     #toggleButtonState() {
-        const formIsValid = this.#inputList.every(
-            (input) => input.validity.valid
+        const hasInvalidInput = this.#inputList.some(
+            (inputElement) => !inputElement.validity.valid
         )
-        this.#buttonElement.disabled = !formIsValid
-        this.#buttonElement.classList.toggle(
-            this.#config.inactiveButtonClass,
-            !formIsValid
-        )
+        if (hasInvalidInput) {
+            this.#buttonElement.classList.add(this.#config.inactiveButtonClass)
+            this.#buttonElement.disabled = true
+        } else {
+            this.#buttonElement.classList.remove(
+                this.#config.inactiveButtonClass
+            )
+            this.#buttonElement.disabled = false
+        }
     }
 
-    // Set event listeners on inputs
+    // Private: set event listeners on inputs
     #setEventListeners() {
-        // Initialize button state
         this.#toggleButtonState()
-
         this.#inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this.#checkInputValidity(inputElement)
@@ -87,10 +71,7 @@ export class FormValidator {
         })
     }
 
-    /**
-     * Public method.
-     * Enables validation: attaches listeners for real-time validation.
-     */
+    // Public: enable validation
     enableValidation() {
         this.#setEventListeners()
     }
