@@ -1,81 +1,132 @@
+// index.js
+
 import { Card } from './Card.js'
 import { FormValidator } from './FormValidator.js'
-import { openPopup, closePopup } from './utils.js'
+import {
+    openPopup,
+    closePopup,
+    initialCards,
+    selectors,
+    validationConfig,
+} from './utils.js'
 
-// Initial cards array (replace links with your real images if needed)
-const initialCards = [
-    { name: 'Yosemite Valley', link: 'https://pictures.com/yosemite.jpg' },
-    { name: 'Lake Louise', link: 'https://pictures.com/lakelouise.jpg' },
-    { name: 'Bald Mountains', link: 'https://pictures.com/baldmountains.jpg' },
-    { name: 'Latemar', link: 'https://pictures.com/latemar.jpg' },
-    { name: 'Vanoise National Park', link: 'https://pictures.com/vanoise.jpg' },
-    { name: 'Lago di Braies', link: 'https://pictures.com/braies.jpg' },
-]
+const els = selectors
 
-// Card rendering
-const cardContainer = document.querySelector('.elements')
-const cardTemplateSelector = '#card-template' // Update if your template selector is different
+// grab all needed elements
+const elementsContainer = document.querySelector(els.elementsContainer)
 
-function renderCard(data) {
-    const card = new Card(data, cardTemplateSelector)
-    const cardElement = card.generateCard()
-    cardContainer.prepend(cardElement)
+// profile popup & form elems
+const profile = {
+    editBtn: document.querySelector(els.profileEditButton),
+    popup: document.querySelector(els.profilePopup),
+    closeBtn: document.querySelector(els.profileCloseButton),
+    form: document.querySelector(els.profileForm),
+    nameIn: document.querySelector(els.nameInput),
+    jobIn: document.querySelector(els.jobInput),
+    nameOut: document.querySelector(els.profileName),
+    jobOut: document.querySelector(els.profileJob),
 }
 
-// Render all initial cards
-initialCards.forEach(renderCard)
-
-// Form validation config
-const validationConfig = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible',
+// add-card popup & form elems
+const cardPopup = {
+    addBtn: document.querySelector(els.addCardButton),
+    popup: document.querySelector(els.cardPopup),
+    closeBtn: document.querySelector(els.cardCloseButton),
+    form: document.querySelector(els.cardForm),
+    titleIn: document.querySelector(els.cardTitleInput),
+    linkIn: document.querySelector(els.cardLinkInput),
 }
 
-// Enable validation for all forms
-document.querySelectorAll(validationConfig.formSelector).forEach((form) => {
-    const validator = new FormValidator(validationConfig, form)
-    validator.enableValidation()
-})
-
-// Example: popup open/close logic for profile edit (adjust selectors as needed)
-const profileEditButton = document.querySelector('.profile__info-edit-button')
-const profilePopup = document.querySelector('.popup_type_profile')
-const profileCloseButton = profilePopup?.querySelector('.popup__close')
-
-if (profileEditButton && profilePopup && profileCloseButton) {
-    profileEditButton.addEventListener('click', () => openPopup(profilePopup))
-    profileCloseButton.addEventListener('click', () => closePopup(profilePopup))
-    profilePopup.addEventListener('mousedown', (evt) => {
-        if (evt.target === profilePopup) closePopup(profilePopup)
-    })
+// render the seed cards
+function renderInitialCards() {
+    initialCards
+        .slice()
+        .reverse()
+        .forEach((data) => {
+            elementsContainer.prepend(new Card(data, '#card').generateCard())
+        })
 }
 
-// Example: logic for the "add card" popup
-const addCardButton = document.querySelector('.profile__add-button')
-const addCardPopup = document.querySelector('.popup_type_add-card')
-const addCardCloseButton = addCardPopup?.querySelector('.popup__close')
+// popup wiring
+function wirePopups() {
+    // Profile popup
+    if (profile.editBtn && profile.popup && profile.closeBtn) {
+        profile.editBtn.addEventListener('click', () => {
+            // Fill inputs with current values
+            profile.nameIn.value = profile.nameOut.textContent
+            profile.jobIn.value = profile.jobOut.textContent
+            openPopup(profile.popup)
+        })
+        profile.closeBtn.addEventListener('click', () =>
+            closePopup(profile.popup)
+        )
+        profile.popup.addEventListener('mousedown', (evt) => {
+            if (evt.target === profile.popup) closePopup(profile.popup)
+        })
+    }
 
-if (addCardButton && addCardPopup && addCardCloseButton) {
-    addCardButton.addEventListener('click', () => openPopup(addCardPopup))
-    addCardCloseButton.addEventListener('click', () => closePopup(addCardPopup))
-    addCardPopup.addEventListener('mousedown', (evt) => {
-        if (evt.target === addCardPopup) closePopup(addCardPopup)
-    })
+    // Card popup
+    if (cardPopup.addBtn && cardPopup.popup && cardPopup.closeBtn) {
+        cardPopup.addBtn.addEventListener('click', () =>
+            openPopup(cardPopup.popup)
+        )
+        cardPopup.closeBtn.addEventListener('click', () =>
+            closePopup(cardPopup.popup)
+        )
+        cardPopup.popup.addEventListener('mousedown', (evt) => {
+            if (evt.target === cardPopup.popup) closePopup(cardPopup.popup)
+        })
+    }
 }
 
-// Example: logic for the image preview popup
-const imagePopup = document.querySelector('.popup_type_image')
-const imagePopupCloseButton = imagePopup?.querySelector('.popup__close')
+// form submissions
+function wireSubmissions() {
+    // Check if profile form exists before adding listener
+    if (profile.form) {
+        profile.form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            profile.nameOut.textContent = profile.nameIn.value
+            profile.jobOut.textContent = profile.jobIn.value
+            closePopup(profile.popup)
+        })
+    } else {
+        console.error('Profile form is null')
+    }
 
-if (imagePopup && imagePopupCloseButton) {
-    imagePopupCloseButton.addEventListener('click', () =>
-        closePopup(imagePopup)
-    )
-    imagePopup.addEventListener('mousedown', (evt) => {
-        if (evt.target === imagePopup) closePopup(imagePopup)
-    })
+    // Check if card popup form exists before adding listener
+    if (cardPopup.form) {
+        cardPopup.form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const data = {
+                name: cardPopup.titleIn.value,
+                link: cardPopup.linkIn.value,
+            }
+            elementsContainer.prepend(new Card(data, '#card').generateCard())
+            closePopup(cardPopup.popup)
+            cardPopup.form.reset()
+        })
+    } else {
+        console.error('Card popup form is null')
+    }
 }
+
+// enable validation
+function initValidation() {
+    new FormValidator(validationConfig.profile, profile.form).enableValidation()
+    new FormValidator(validationConfig.card, cardPopup.form).enableValidation()
+}
+
+// bootstrap
+renderInitialCards()
+wirePopups()
+wireSubmissions()
+initValidation()
+
+console.log('Profile edit button:', profile.editBtn)
+console.log('Profile popup:', profile.popup)
+console.log('Profile close button:', profile.closeBtn)
+console.log('Card add button:', cardPopup.addBtn)
+console.log('Card popup:', cardPopup.popup)
+console.log('Card close button:', cardPopup.closeBtn)
+console.log('Profile form:', profile.form)
+console.log('Card popup form:', cardPopup.form)
