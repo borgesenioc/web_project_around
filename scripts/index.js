@@ -1,132 +1,83 @@
-// index.js
+import Card from './Card.js'
+import FormValidator from './FormValidator.js'
+import Section from './Section.js'
+import PopupWithImage from './PopupWithImage.js'
+import PopupWithForm from './PopupWithForm.js'
+import UserInfo from './UserInfo.js'
+import { initialCards, validationConfig } from './utils.js'
 
-import { Card } from './Card.js'
-import { FormValidator } from './FormValidator.js'
-import {
-    openPopup,
-    closePopup,
-    initialCards,
-    selectors,
-    validationConfig,
-} from './utils.js'
+// Inicializa o popup de imagem
+const imagePopup = new PopupWithImage('.popup-image')
+imagePopup.setEventListeners()
 
-const els = selectors
-
-// grab all needed elements
-const elementsContainer = document.querySelector(els.elementsContainer)
-
-// profile popup & form elems
-const profile = {
-    editBtn: document.querySelector(els.profileEditButton),
-    popup: document.querySelector(els.profilePopup),
-    closeBtn: document.querySelector(els.profileCloseButton),
-    form: document.querySelector(els.profileForm),
-    nameIn: document.querySelector(els.nameInput),
-    jobIn: document.querySelector(els.jobInput),
-    nameOut: document.querySelector(els.profileName),
-    jobOut: document.querySelector(els.profileJob),
+// Função para criar um cartão
+function createCard(cardData) {
+    const card = new Card(cardData, '#card-template', (name, link) => {
+        imagePopup.open(name, link)
+    })
+    return card.generateCard()
 }
 
-// add-card popup & form elems
-const cardPopup = {
-    addBtn: document.querySelector(els.addCardButton),
-    popup: document.querySelector(els.cardPopup),
-    closeBtn: document.querySelector(els.cardCloseButton),
-    form: document.querySelector(els.cardForm),
-    titleIn: document.querySelector(els.cardTitleInput),
-    linkIn: document.querySelector(els.cardLinkInput),
-}
+// Inicializa a seção de cartões
+const cardSection = new Section(
+    {
+        items: initialCards,
+        renderer: (item) => {
+            const cardElement = createCard(item)
+            cardSection.addItem(cardElement)
+        },
+    },
+    '.elements'
+)
 
-// render the seed cards
-function renderInitialCards() {
-    initialCards
-        .slice()
-        .reverse()
-        .forEach((data) => {
-            elementsContainer.prepend(new Card(data, '#card').generateCard())
-        })
-}
+// Renderiza os cartões iniciais
+cardSection.renderItems()
 
-// popup wiring
-function wirePopups() {
-    // Profile popup
-    if (profile.editBtn && profile.popup && profile.closeBtn) {
-        profile.editBtn.addEventListener('click', () => {
-            // Fill inputs with current values
-            profile.nameIn.value = profile.nameOut.textContent
-            profile.jobIn.value = profile.jobOut.textContent
-            openPopup(profile.popup)
-        })
-        profile.closeBtn.addEventListener('click', () =>
-            closePopup(profile.popup)
-        )
-        profile.popup.addEventListener('mousedown', (evt) => {
-            if (evt.target === profile.popup) closePopup(profile.popup)
-        })
-    }
+// Inicializa as informações do usuário
+const userInfo = new UserInfo({
+    nameSelector: '.profile__info-title',
+    jobSelector: '.profile__info-paragraph',
+})
 
-    // Card popup
-    if (cardPopup.addBtn && cardPopup.popup && cardPopup.closeBtn) {
-        cardPopup.addBtn.addEventListener('click', () =>
-            openPopup(cardPopup.popup)
-        )
-        cardPopup.closeBtn.addEventListener('click', () =>
-            closePopup(cardPopup.popup)
-        )
-        cardPopup.popup.addEventListener('mousedown', (evt) => {
-            if (evt.target === cardPopup.popup) closePopup(cardPopup.popup)
-        })
-    }
-}
+// Inicializa o popup do formulário de perfil
+const profileFormPopup = new PopupWithForm('.popup', (formData) => {
+    userInfo.setUserInfo({
+        name: formData.name,
+        job: formData.job,
+    })
+    profileFormPopup.close()
+})
+profileFormPopup.setEventListeners()
 
-// form submissions
-function wireSubmissions() {
-    // Check if profile form exists before adding listener
-    if (profile.form) {
-        profile.form.addEventListener('submit', (e) => {
-            e.preventDefault()
-            profile.nameOut.textContent = profile.nameIn.value
-            profile.jobOut.textContent = profile.jobIn.value
-            closePopup(profile.popup)
-        })
-    } else {
-        console.error('Profile form is null')
-    }
+// Inicializa o popup do formulário de adição de cartão
+const addCardFormPopup = new PopupWithForm('.popup-card', (formData) => {
+    const newCard = createCard({
+        name: formData.title,
+        link: formData.link,
+    })
+    cardSection.addItem(newCard)
+    addCardFormPopup.close()
+})
+addCardFormPopup.setEventListeners()
 
-    // Check if card popup form exists before adding listener
-    if (cardPopup.form) {
-        cardPopup.form.addEventListener('submit', (e) => {
-            e.preventDefault()
-            const data = {
-                name: cardPopup.titleIn.value,
-                link: cardPopup.linkIn.value,
-            }
-            elementsContainer.prepend(new Card(data, '#card').generateCard())
-            closePopup(cardPopup.popup)
-            cardPopup.form.reset()
-        })
-    } else {
-        console.error('Card popup form is null')
-    }
-}
+// Adiciona listener ao botão de editar perfil
+document
+    .querySelector('.profile__info-edit-button')
+    .addEventListener('click', () => {
+        const userData = userInfo.getUserInfo()
+        document.querySelector('#formName').value = userData.name
+        document.querySelector('#formJob').value = userData.job
+        profileFormPopup.open()
+    })
 
-// enable validation
-function initValidation() {
-    new FormValidator(validationConfig.profile, profile.form).enableValidation()
-    new FormValidator(validationConfig.card, cardPopup.form).enableValidation()
-}
+// Adiciona listener ao botão de adicionar cartão
+document.querySelector('.profile__add-button').addEventListener('click', () => {
+    addCardFormPopup.open()
+})
 
-// bootstrap
-renderInitialCards()
-wirePopups()
-wireSubmissions()
-initValidation()
-
-console.log('Profile edit button:', profile.editBtn)
-console.log('Profile popup:', profile.popup)
-console.log('Profile close button:', profile.closeBtn)
-console.log('Card add button:', cardPopup.addBtn)
-console.log('Card popup:', cardPopup.popup)
-console.log('Card close button:', cardPopup.closeBtn)
-console.log('Profile form:', profile.form)
-console.log('Card popup form:', cardPopup.form)
+// Inicializa a validação dos formulários
+const formList = Array.from(document.querySelectorAll('.popup__form'))
+formList.forEach((formElement) => {
+    const validator = new FormValidator(validationConfig, formElement)
+    validator.enableValidation()
+})
