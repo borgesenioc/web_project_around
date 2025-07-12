@@ -1,25 +1,25 @@
-// Card.js
-
-import { openPopup, closePopup } from './utils.js'
-
-export class Card {
-    // Private fields
+// modificado no sprint 11
+export default class Card {
+    // Campos privados
     #name
     #link
     #templateSelector
     #element
+    #handleCardClick
 
     /**
-     * @param {{ name: string, link: string }} data — card text and image URL
-     * @param {string} templateSelector — CSS selector for the <template> element
+     * @param {{ name: string, link: string }} data — dados do cartão (texto e URL da imagem)
+     * @param {string} templateSelector — seletor CSS para o elemento <template>
+     * @param {Function} handleCardClick — callback para quando a imagem do cartão é clicada
      */
-    constructor({ name, link }, templateSelector) {
+    constructor({ name, link }, templateSelector, handleCardClick) {
         this.#name = name
         this.#link = link
         this.#templateSelector = templateSelector
+        this.#handleCardClick = handleCardClick
     }
 
-    // Clone the template and return a new card element
+    // Clona o template e retorna um novo elemento de cartão
     #getTemplate() {
         const template = document
             .querySelector(this.#templateSelector)
@@ -27,53 +27,19 @@ export class Card {
         return template.cloneNode(true)
     }
 
-    // Handler: toggle the “like” button state
+    // Manipulador: alterna o estado do botão "like"
     #handleLike = () => {
         this.#element
             .querySelector('.elements__card-header-like-button')
             .classList.toggle('elements__card-header-like-button_active')
     }
 
-    // Handler: remove this card from the DOM
+    // Manipulador: remove este cartão do DOM
     #handleDelete = () => {
         this.#element.remove()
     }
 
-    // Handler: open the image preview popup
-    #handleImageClick = () => {
-        // clone the image-popup template
-        const popupTemplate = document
-            .querySelector('#image-highlight')
-            .content.querySelector('.popup')
-        const popupEl = popupTemplate.cloneNode(true)
-
-        // set image src/alt and caption
-        const imgEl = popupEl.querySelector('.popup-image__highlight')
-        const captionEl = popupEl.querySelector('.popup-image__paragraph')
-        imgEl.src = this.#link
-        imgEl.alt = this.#name
-        captionEl.textContent = this.#name
-
-        // add to DOM and open
-        document.body.appendChild(popupEl)
-        openPopup(popupEl)
-
-        // close on overlay or close-button click
-        popupEl.addEventListener('mousedown', (evt) => {
-            if (evt.target === popupEl) {
-                closePopup(popupEl)
-                popupEl.remove()
-            }
-        })
-        popupEl
-            .querySelector('.popup-image__close')
-            .addEventListener('click', () => {
-                closePopup(popupEl)
-                popupEl.remove()
-            })
-    }
-
-    // Attach event listeners to card controls
+    // Adiciona event listeners aos controles do cartão
     #setEventListeners() {
         this.#element
             .querySelector('.elements__card-header-like-button')
@@ -83,18 +49,21 @@ export class Card {
             .addEventListener('click', this.#handleDelete)
         this.#element
             .querySelector('.elements__card-image-button')
-            .addEventListener('click', this.#handleImageClick)
+            .addEventListener('click', () => {
+                // Chama o callback passando nome e link
+                this.#handleCardClick(this.#name, this.#link)
+            })
     }
 
     /**
-     * Public method — generate the DOM element for this card,
-     * fill it with data, wire up listeners, and return it.
+     * Método público — gera o elemento DOM para este cartão,
+     * preenche com dados, conecta listeners e o retorna.
      * @returns {HTMLElement}
      */
     generateCard() {
         this.#element = this.#getTemplate()
 
-        // fill in content
+        // preenche o conteúdo
         const imageEl = this.#element.querySelector('.elements__card-image')
         const titleEl = this.#element.querySelector(
             '.elements__card-header-title'
@@ -103,7 +72,7 @@ export class Card {
         imageEl.alt = this.#name
         titleEl.textContent = this.#name
 
-        // add event listeners
+        // adiciona event listeners
         this.#setEventListeners()
 
         return this.#element
