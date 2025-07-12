@@ -7,8 +7,7 @@ import UserInfo from './UserInfo.js'
 import { initialCards, validationConfig } from './utils.js'
 
 // Inicializa o popup de imagem
-const imagePopup = new PopupWithImage('.popup-image')
-imagePopup.setEventListeners()
+const imagePopup = new PopupWithImage('.popup_type_image')
 
 // Função para criar um cartão
 function createCard(cardData) {
@@ -40,25 +39,31 @@ const userInfo = new UserInfo({
 })
 
 // Inicializa o popup do formulário de perfil
-const profileFormPopup = new PopupWithForm('.popup', (formData) => {
-    userInfo.setUserInfo({
-        name: formData.name,
-        job: formData.job,
-    })
-    profileFormPopup.close()
-})
-profileFormPopup.setEventListeners()
+const profileFormPopup = new PopupWithForm(
+    '.popup',
+    (formData) => {
+        userInfo.setUserInfo({
+            name: formData.profileName,
+            job: formData.profileJob,
+        })
+        profileFormPopup.close()
+    },
+    '.popup__form' // Opcional, é o valor padrão
+)
 
 // Inicializa o popup do formulário de adição de cartão
-const addCardFormPopup = new PopupWithForm('.popup-card', (formData) => {
-    const newCard = createCard({
-        name: formData.title,
-        link: formData.link,
-    })
-    cardSection.addItem(newCard)
-    addCardFormPopup.close()
-})
-addCardFormPopup.setEventListeners()
+const addCardFormPopup = new PopupWithForm(
+    '.popup-card',
+    (formData) => {
+        const newCard = createCard({
+            name: formData.locationName, // O name do input é "locationName"
+            link: formData.cardURL, // O name do input é "cardURL"
+        })
+        cardSection.addItem(newCard)
+        addCardFormPopup.close()
+    },
+    '.popup-card__form' // Seletor específico para este formulário
+)
 
 // Adiciona listener ao botão de editar perfil
 document
