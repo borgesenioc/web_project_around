@@ -1,4 +1,5 @@
-export class FormValidator {
+// modificado no sprint 11
+export default class FormValidator {
     #config
     #formElement
     #inputList
@@ -15,7 +16,7 @@ export class FormValidator {
         )
     }
 
-    // Private: show error message and style
+    // Método privado: mostra mensagem de erro e estilo
     #showInputError(inputElement, errorMessage) {
         const errorElement = this.#formElement.querySelector(
             `#${inputElement.id}-error`
@@ -25,7 +26,7 @@ export class FormValidator {
         errorElement.classList.add(this.#config.errorClass)
     }
 
-    // Private: hide error message and style
+    // Método privado: esconde mensagem de erro e estilo
     #hideInputError(inputElement) {
         const errorElement = this.#formElement.querySelector(
             `#${inputElement.id}-error`
@@ -35,7 +36,7 @@ export class FormValidator {
         errorElement.classList.remove(this.#config.errorClass)
     }
 
-    // Private: check input validity
+    // Método privado: verifica validade do input
     #checkInputValidity(inputElement) {
         if (!inputElement.validity.valid) {
             this.#showInputError(inputElement, inputElement.validationMessage)
@@ -44,7 +45,7 @@ export class FormValidator {
         }
     }
 
-    // Private: toggle submit button state
+    // Método privado: alterna estado do botão submit
     #toggleButtonState() {
         const hasInvalidInput = this.#inputList.some(
             (inputElement) => !inputElement.validity.valid
@@ -60,7 +61,7 @@ export class FormValidator {
         }
     }
 
-    // Private: set event listeners on inputs
+    // Método privado: configura event listeners nos inputs
     #setEventListeners() {
         this.#toggleButtonState()
         this.#inputList.forEach((inputElement) => {
@@ -71,7 +72,7 @@ export class FormValidator {
         })
     }
 
-    // Public: enable validation
+    // Método público: habilita validação
     enableValidation() {
         this.#setEventListeners()
     }
