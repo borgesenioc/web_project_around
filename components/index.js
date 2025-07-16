@@ -39,17 +39,14 @@ const userInfo = new UserInfo({
 })
 
 // Inicializa o popup do formulário de perfil
-const profileFormPopup = new PopupWithForm(
-    '.popup',
-    (formData) => {
-        userInfo.setUserInfo({
-            name: formData.profileName,
-            job: formData.profileJob,
-        })
-        profileFormPopup.close()
-    },
-    '.popup__form' // Opcional, é o valor padrão
-)
+const profileFormPopup = new PopupWithForm('.popup', (formData) => {
+    userInfo.setUserInfo({
+        name: formData.profileName,
+        job: formData.profileJob,
+    })
+    profileFormPopup.close()
+})
+profileFormPopup.setEventListeners()
 
 // Inicializa o popup do formulário de adição de cartão
 const addCardFormPopup = new PopupWithForm(
@@ -64,6 +61,10 @@ const addCardFormPopup = new PopupWithForm(
     },
     '.popup-card__form' // Seletor específico para este formulário
 )
+addCardFormPopup.setEventListeners()
+
+// Add event listeners for the image popup
+imagePopup.setEventListeners()
 
 // Adiciona listener ao botão de editar perfil
 document
