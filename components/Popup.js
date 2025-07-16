@@ -23,7 +23,11 @@ export default class Popup {
     setEventListeners() {
         // Verifique se o popup existe antes de acessar seus elementos
         if (this._popup) {
-            const closeButton = this._popup.querySelector('.popup__close')
+            // tente varios seletores possiveis
+            const closeButton =
+                this._popup.querySelector('.popup__close') ||
+                this._popup.querySelector('.popup-card__close') ||
+                this._popup.querySelector('.popup-image__close')
             // Verifique se o botão de fechar existe
             if (closeButton) {
                 closeButton.addEventListener('click', () => {

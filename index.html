@@ -111,6 +111,17 @@
             </div>
         </div>
 
+        <!-- MOVED: Image popup is now directly in the body, not in a template -->
+        <div class="popup popup_type_image">
+            <div class="popup-image__container">
+                <button
+                    class="popup-image__close popup-image__trash-button"
+                ></button>
+                <img class="popup-image__highlight" src="" alt="" />
+                <p class="popup-image__paragraph"></p>
+            </div>
+        </div>
+
         <script type="module" src="./components/index.js"></script>
         <template id="card-template">
             <div class="elements__card">
@@ -124,15 +135,7 @@
             </div>
         </template>
         <template id="image-highlight">
-            <div class="popup popup_type_image">
-                <div class="popup-image__container">
-                    <button
-                        class="popup-image__close popup-image__trash-button"
-                    ></button>
-                    <img class="popup-image__highlight" src="" alt="" />
-                    <p class="popup-image__paragraph"></p>
-                </div>
-            </div>
+            <!-- Content moved to body above -->
         </template>
     </body>
 </html>
