@@ -1,8 +1,8 @@
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
 import Section from './Section.js'
-import PopupWithImage from './PopupWithImage.js'
-import PopupWithForm from './PopupWithForm.js'
+import PopupWithImage from './popupWithImage.js'
+import PopupWithForm from './popupWithForm.js'
 import UserInfo from './UserInfo.js'
 import { initialCards, validationConfig } from './utils.js'
 
