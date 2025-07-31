@@ -5,17 +5,11 @@ export default class PopupWithForm extends Popup {
         super(popupSelector)
         this._submitCallback = submitCallback
         this._form = this._popup.querySelector(formSelector)
-
-        // Verificar se o formulário foi encontrado
-        if (!this._form) {
-            console.error(
-                `Formulário não encontrado com o seletor: ${formSelector}`
-            )
-        } else {
-            this._inputList = this._form.querySelectorAll(
-                '.popup__input, .popup-card__form-input'
-            )
-        }
+        this._inputList = this._form.querySelectorAll(
+            '.popup__input, .popup-card__form-input'
+        )
+        this._submitButton = this._form.querySelector('.popup__button')
+        this._submitButtonText = this._submitButton.textContent || 'Salvar'
     }
 
     _getInputValues() {
@@ -42,6 +36,14 @@ export default class PopupWithForm extends Popup {
         super.close()
         if (this._form) {
             this._form.reset()
+        }
+    }
+
+    renderLoading(isLoading, loadingText = 'Salvando...') {
+        if (isLoading) {
+            this._submitButton.textContent = loadingText
+        } else {
+            this._submitButton.textContent = this._submitButtonText
         }
     }
 }
