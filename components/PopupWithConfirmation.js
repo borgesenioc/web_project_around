@@ -1,10 +1,3 @@
-gesenioc /
-    Projects /
-    tripleten /
-    web_project_around /
-    components /
-    PopupWithConfirmation.js
-
 import Popup from './Popup.js'
 
 export default class PopupWithConfirmation extends Popup {

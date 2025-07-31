@@ -1,11 +1,3 @@
-Users /
-    borgesenioc /
-    Projects /
-    tripleten /
-    web_project_around /
-    components /
-    UserInfo.js
-
 export default class UserInfo {
     constructor({ nameSelector, jobSelector, avatarSelector }) {
         this._nameElement = document.querySelector(nameSelector)
@@ -25,7 +17,10 @@ export default class UserInfo {
         if (job) this._jobElement.textContent = job
     }
 
+    // Add this method to handle avatar updates
     setAvatar(avatar) {
-        if (avatar) this._avatarElement.src = avatar
+        if (avatar && this._avatarElement) {
+            this._avatarElement.src = avatar
+        }
     }
 }

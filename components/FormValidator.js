@@ -47,9 +47,16 @@ export default class FormValidator {
 
     // Método privado: alterna estado do botão submit
     #toggleButtonState() {
+        // Only proceed if buttonElement exists
+        if (!this.#buttonElement) {
+            console.warn('Submit button not found in form', this.#formElement)
+            return
+        }
+
         const hasInvalidInput = this.#inputList.some(
             (inputElement) => !inputElement.validity.valid
         )
+
         if (hasInvalidInput) {
             this.#buttonElement.classList.add(this.#config.inactiveButtonClass)
             this.#buttonElement.disabled = true

@@ -210,10 +210,23 @@ const formValidators = {}
 const enableValidation = (config) => {
     const formList = Array.from(document.querySelectorAll(config.formSelector))
     formList.forEach((formElement) => {
-        const validator = new FormValidator(config, formElement)
-        const formName = formElement.getAttribute('name')
-        formValidators[formName] = validator
-        validator.enableValidation()
+        try {
+            const formName = formElement.getAttribute('name') || 'unnamed-form'
+
+            // Skip the confirmation form since it doesn't need validation
+            if (formName === 'confirm-form') {
+                return
+            }
+
+            const validator = new FormValidator(config, formElement)
+            formValidators[formName] = validator
+            validator.enableValidation()
+        } catch (err) {
+            console.warn(
+                `Error initializing validator for form ${formElement}:`,
+                err
+            )
+        }
     })
 }
 

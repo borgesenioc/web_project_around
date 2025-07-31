@@ -5,20 +5,37 @@ export default class PopupWithForm extends Popup {
         super(popupSelector)
         this._submitCallback = submitCallback
         this._form = this._popup.querySelector(formSelector)
-        this._inputList = this._form.querySelectorAll(
-            '.popup__input, .popup-card__form-input'
-        )
-        this._submitButton = this._form.querySelector('.popup__button')
-        this._submitButtonText = this._submitButton.textContent || 'Salvar'
+
+        if (this._form) {
+            this._inputList = this._form.querySelectorAll(
+                '.popup__input, .popup-card__form-input'
+            )
+            this._submitButton = this._form.querySelector('.popup__button')
+            this._submitButtonText = this._submitButton
+                ? this._submitButton.textContent || 'Salvar'
+                : 'Salvar'
+        } else {
+            console.error(
+                `Form not found with selector: ${formSelector} in popup: ${popupSelector}`
+            )
+            this._inputList = []
+            this._submitButtonText = 'Salvar'
+        }
     }
 
+    // Add this method - it's missing from your class
     _getInputValues() {
         const formValues = {}
-        if (this._inputList) {
+
+        if (this._inputList && this._inputList.length > 0) {
             this._inputList.forEach((input) => {
                 formValues[input.name] = input.value
             })
+            console.log('Form values collected:', formValues)
+        } else {
+            console.warn('No input elements found in form')
         }
+
         return formValues
     }
 
@@ -40,10 +57,12 @@ export default class PopupWithForm extends Popup {
     }
 
     renderLoading(isLoading, loadingText = 'Salvando...') {
-        if (isLoading) {
-            this._submitButton.textContent = loadingText
-        } else {
-            this._submitButton.textContent = this._submitButtonText
+        if (this._submitButton) {
+            if (isLoading) {
+                this._submitButton.textContent = loadingText
+            } else {
+                this._submitButton.textContent = this._submitButtonText
+            }
         }
     }
 }
