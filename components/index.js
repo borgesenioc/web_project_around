@@ -7,14 +7,12 @@ import PopupWithConfirmation from './PopupWithConfirmation.js'
 import UserInfo from './UserInfo.js'
 import Api from './Api.js'
 import { validationConfig } from './utils.js'
+import { API_BASE_URL } from './config.js'
 
-// Replace 'YOUR_TOKEN' with your actual token
+// Initialize API without hardcoding the token
 const api = new Api({
-    baseUrl: 'https://around-api.pt-br.tripleten-services.com/v1',
-    headers: {
-        authorization: '336d021f-cb66-4661-8bcb-04d7f77d0288',
-        'Content-Type': 'application/json',
-    },
+    baseUrl: API_BASE_URL,
+    // Headers will be automatically set in the Api constructor
 })
 
 let userId = null // Store current user ID

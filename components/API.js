@@ -1,7 +1,13 @@
+import { API_TOKEN, API_BASE_URL } from './config.js'
+
 export default class Api {
-    constructor({ baseUrl, headers }) {
+    constructor({ baseUrl = API_BASE_URL, headers = {} }) {
         this._baseUrl = baseUrl
-        this._headers = headers
+        this._headers = {
+            authorization: API_TOKEN,
+            'Content-Type': 'application/json',
+            ...headers,
+        }
     }
 
     _checkResponse(res) {
