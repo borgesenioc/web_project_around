@@ -12,7 +12,7 @@ import { validationConfig } from './utils.js'
 const api = new Api({
     baseUrl: 'https://around-api.pt-br.tripleten-services.com/v1',
     headers: {
-        authorization: 'YOUR_TOKEN',
+        authorization: '336d021f-cb66-4661-8bcb-04d7f77d0288',
         'Content-Type': 'application/json',
     },
 })
