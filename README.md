@@ -4,6 +4,24 @@ Um projeto web interativo demonstrando técnicas modernas de desenvolvimento web
 
 ---
 
+> ⚠️ **Nota Importante**  
+> Este projeto ainda **não possui um método de build completo**. Para que as requisições à API funcionem corretamente, é necessário **definir manualmente o token da API** no `localStorage` do navegador antes de interagir com o app.
+
+### Como configurar o token da API temporariamente:
+
+```js
+// Obtenha o token do localStorage (defina manualmente uma vez ou via um script de configuração)
+export const API_TOKEN = localStorage.getItem('api_token') || ''
+export const API_BASE_URL = 'https://around-api.pt-br.tripleten-services.com/v1'
+
+// Não esqueça de definir o API_TOKEN no console do navegador antes de usar o app
+
+// cole no console do navegador:
+localStorage.setItem('api_token', 'SEU_API_TOKEN')
+// pressione ENTER
+// Recarregue a página
+```
+
 ## Funcionalidades
 
 -   **CSS Modular**: Estilos organizados no diretório `blocks` (por exemplo, `header.css`, `popup.css`)
