@@ -1,25 +1,35 @@
-// modificado no sprint 11
 export default class Card {
-    // Campos privados
+    // Private fields
     #name
     #link
     #templateSelector
     #element
     #handleCardClick
+    #handleDeleteClick
+    #handleLikeClick
+    #cardId
+    #userId
+    #ownerId
+    #isLiked
 
-    /**
-     * @param {{ name: string, link: string }} data — dados do cartão (texto e URL da imagem)
-     * @param {string} templateSelector — seletor CSS para o elemento <template>
-     * @param {Function} handleCardClick — callback para quando a imagem do cartão é clicada
-     */
-    constructor({ name, link }, templateSelector, handleCardClick) {
+    constructor(
+        { name, link, _id, isLiked, owner },
+        templateSelector,
+        { handleCardClick, handleDeleteClick, handleLikeClick },
+        userId
+    ) {
         this.#name = name
         this.#link = link
         this.#templateSelector = templateSelector
         this.#handleCardClick = handleCardClick
+        this.#handleDeleteClick = handleDeleteClick
+        this.#handleLikeClick = handleLikeClick
+        this.#cardId = _id
+        this.#userId = userId
+        this.#ownerId = owner._id || owner // Sometimes the API returns owner as object, sometimes as string
+        this.#isLiked = isLiked
     }
 
-    // Clona o template e retorna um novo elemento de cartão
     #getTemplate() {
         const template = document
             .querySelector(this.#templateSelector)
@@ -27,43 +37,68 @@ export default class Card {
         return template.cloneNode(true)
     }
 
-    // Manipulador: alterna o estado do botão "like"
+    getId() {
+        return this.#cardId
+    }
+
     #handleLike = () => {
-        this.#element
-            .querySelector('.elements__card-header-like-button')
-            .classList.toggle('elements__card-header-like-button_active')
+        this.#handleLikeClick(this.#cardId, this.#isLiked)
     }
 
-    // Manipulador: remove este cartão do DOM
     #handleDelete = () => {
-        this.#element.remove()
+        this.#handleDeleteClick(this.#cardId)
     }
 
-    // Adiciona event listeners aos controles do cartão
+    setLikeStatus(isLiked) {
+        this.#isLiked = isLiked
+        this.#updateLikeButton()
+    }
+
+    #updateLikeButton() {
+        const likeButton = this.#element.querySelector(
+            '.elements__card-header-like-button'
+        )
+        if (this.#isLiked) {
+            likeButton.classList.add('elements__card-header-like-button_active')
+        } else {
+            likeButton.classList.remove(
+                'elements__card-header-like-button_active'
+            )
+        }
+    }
+
+    removeCard() {
+        this.#element.remove()
+        this.#element = null
+    }
+
     #setEventListeners() {
+        // Like button
         this.#element
             .querySelector('.elements__card-header-like-button')
             .addEventListener('click', this.#handleLike)
-        this.#element
-            .querySelector('.elements__card-trash-button')
-            .addEventListener('click', this.#handleDelete)
+
+        // Delete button (only for cards created by current user)
+        const deleteButton = this.#element.querySelector(
+            '.elements__card-trash-button'
+        )
+        if (this.#ownerId === this.#userId) {
+            deleteButton.addEventListener('click', this.#handleDelete)
+        } else {
+            deleteButton.style.display = 'none' // Hide delete button if not owner
+        }
+
+        // Image click
         this.#element
             .querySelector('.elements__card-image-button')
             .addEventListener('click', () => {
-                // Chama o callback passando nome e link
                 this.#handleCardClick(this.#name, this.#link)
             })
     }
 
-    /**
-     * Método público — gera o elemento DOM para este cartão,
-     * preenche com dados, conecta listeners e o retorna.
-     * @returns {HTMLElement}
-     */
     generateCard() {
         this.#element = this.#getTemplate()
 
-        // preenche o conteúdo
         const imageEl = this.#element.querySelector('.elements__card-image')
         const titleEl = this.#element.querySelector(
             '.elements__card-header-title'
@@ -72,7 +107,9 @@ export default class Card {
         imageEl.alt = this.#name
         titleEl.textContent = this.#name
 
-        // adiciona event listeners
+        // Set initial like status
+        this.#updateLikeButton()
+
         this.#setEventListeners()
 
         return this.#element
