@@ -9,16 +9,16 @@ import Api from './Api.js'
 import { validationConfig } from './utils.js'
 import { API_BASE_URL } from './config.js'
 
-// Initialize API without hardcoding the token
+// Inicializa a API sem hardcode do token
 const api = new Api({
     baseUrl: API_BASE_URL,
-    // Headers will be automatically set in the Api constructor
+    // Os headers serão definidos automaticamente no construtor da Api
 })
 
-let userId = null // Store current user ID
-let cardSection = null // Will be initialized after data is loaded
+let userId = null // Armazena o ID do usuário atual
+let cardSection = null // Será inicializado após os dados serem carregados
 
-// Initialize popups
+// Inicializa os popups
 const imagePopup = new PopupWithImage('.popup_type_image')
 const profileFormPopup = new PopupWithForm('.popup', handleProfileFormSubmit)
 const addCardFormPopup = new PopupWithForm(
@@ -32,14 +32,14 @@ const avatarFormPopup = new PopupWithForm(
     handleAvatarFormSubmit
 )
 
-// Initialize user info
+// Inicializa as informações do usuário
 const userInfo = new UserInfo({
     nameSelector: '.profile__info-title',
     jobSelector: '.profile__info-paragraph',
     avatarSelector: '.profile__default-image',
 })
 
-// Create card function
+// Função para criar card
 function createCard(cardData) {
     const card = new Card(
         cardData,
@@ -58,7 +58,7 @@ function createCard(cardData) {
                             deleteCardPopup.close()
                         })
                         .catch((err) => {
-                            console.log(`Error deleting card: ${err}`)
+                            console.log(`Erro ao deletar card: ${err}`)
                         })
                         .finally(() => {
                             deleteCardPopup.renderLoading(false)
@@ -75,7 +75,7 @@ function createCard(cardData) {
                         card.setLikeStatus(updatedCard.isLiked)
                     })
                     .catch((err) => {
-                        console.log(`Error updating like status: ${err}`)
+                        console.log(`Erro ao atualizar status do like: ${err}`)
                     })
             },
         },
@@ -84,7 +84,7 @@ function createCard(cardData) {
     return card.generateCard()
 }
 
-// Handle profile form submit
+// Manipula o envio do formulário de perfil
 function handleProfileFormSubmit(formData) {
     profileFormPopup.renderLoading(true)
     api.updateUserInfo({
@@ -99,14 +99,14 @@ function handleProfileFormSubmit(formData) {
             profileFormPopup.close()
         })
         .catch((err) => {
-            console.log(`Error updating profile: ${err}`)
+            console.log(`Erro ao atualizar perfil: ${err}`)
         })
         .finally(() => {
             profileFormPopup.renderLoading(false)
         })
 }
 
-// Handle add card form submit
+// Manipula o envio do formulário de adicionar card
 function handleAddCardFormSubmit(formData) {
     addCardFormPopup.renderLoading(true)
     api.addCard({
@@ -119,14 +119,14 @@ function handleAddCardFormSubmit(formData) {
             addCardFormPopup.close()
         })
         .catch((err) => {
-            console.log(`Error adding card: ${err}`)
+            console.log(`Erro ao adicionar card: ${err}`)
         })
         .finally(() => {
             addCardFormPopup.renderLoading(false)
         })
 }
 
-// Handle avatar form submit
+// Manipula o envio do formulário de avatar
 function handleAvatarFormSubmit(formData) {
     avatarFormPopup.renderLoading(true)
     api.updateAvatar(formData.avatar)
@@ -135,26 +135,26 @@ function handleAvatarFormSubmit(formData) {
             avatarFormPopup.close()
         })
         .catch((err) => {
-            console.log(`Error updating avatar: ${err}`)
+            console.log(`Erro ao atualizar avatar: ${err}`)
         })
         .finally(() => {
             avatarFormPopup.renderLoading(false)
         })
 }
 
-// Add event listeners
+// Adiciona os event listeners
 imagePopup.setEventListeners()
 profileFormPopup.setEventListeners()
 addCardFormPopup.setEventListeners()
 deleteCardPopup.setEventListeners()
 avatarFormPopup.setEventListeners()
 
-// Add avatar edit button listener
+// Adiciona listener ao botão de editar avatar
 document.querySelector('.profile__avatar').addEventListener('click', () => {
     avatarFormPopup.open()
 })
 
-// Add profile edit button listener
+// Adiciona listener ao botão de editar perfil
 document
     .querySelector('.profile__info-edit-button')
     .addEventListener('click', () => {
@@ -164,17 +164,17 @@ document
         profileFormPopup.open()
     })
 
-// Add new card button listener
+// Adiciona listener ao botão de adicionar novo card
 document.querySelector('.profile__add-button').addEventListener('click', () => {
     addCardFormPopup.open()
 })
 
-// Load initial data
+// Carrega os dados iniciais
 api.getAppInfo()
     .then(([userData, initialCards]) => {
         userId = userData._id
 
-        // Set user info
+        // Define as informações do usuário
         userInfo.setUserInfo({
             name: userData.name,
             job: userData.about,
@@ -182,7 +182,7 @@ api.getAppInfo()
 
         userInfo.setAvatar(userData.avatar)
 
-        // Initialize cards section
+        // Inicializa a seção de cards
         cardSection = new Section(
             {
                 items: initialCards,
@@ -194,24 +194,24 @@ api.getAppInfo()
             '.elements'
         )
 
-        // Render initial cards
+        // Renderiza os cards iniciais
         cardSection.renderItems()
     })
     .catch((err) => {
-        console.log(`Error loading initial data: ${err}`)
+        console.log(`Erro ao carregar dados iniciais: ${err}`)
     })
 
-// Initialize form validation
+// Inicializa a validação dos formulários
 const formValidators = {}
 
-// Enable validation for all forms
+// Habilita validação para todos os formulários
 const enableValidation = (config) => {
     const formList = Array.from(document.querySelectorAll(config.formSelector))
     formList.forEach((formElement) => {
         try {
             const formName = formElement.getAttribute('name') || 'unnamed-form'
 
-            // Skip the confirmation form since it doesn't need validation
+            // Ignora o formulário de confirmação pois não precisa de validação
             if (formName === 'confirm-form') {
                 return
             }
@@ -221,7 +221,7 @@ const enableValidation = (config) => {
             validator.enableValidation()
         } catch (err) {
             console.warn(
-                `Error initializing validator for form ${formElement}:`,
+                `Erro ao inicializar validador para o formulário ${formElement}:`,
                 err
             )
         }

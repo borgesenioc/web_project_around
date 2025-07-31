@@ -1,5 +1,5 @@
 export default class Card {
-    // Private fields
+    // Campos privados
     #name
     #link
     #templateSelector
@@ -26,7 +26,7 @@ export default class Card {
         this.#handleLikeClick = handleLikeClick
         this.#cardId = _id
         this.#userId = userId
-        this.#ownerId = owner._id || owner // Sometimes the API returns owner as object, sometimes as string
+        this.#ownerId = owner._id || owner // Às vezes a API retorna owner como objeto, às vezes como string
         this.#isLiked = isLiked
     }
 
@@ -73,22 +73,22 @@ export default class Card {
     }
 
     #setEventListeners() {
-        // Like button
+        // Botão de curtir
         this.#element
             .querySelector('.elements__card-header-like-button')
             .addEventListener('click', this.#handleLike)
 
-        // Delete button (only for cards created by current user)
+        // Botão de deletar (apenas para cards criados pelo usuário atual)
         const deleteButton = this.#element.querySelector(
             '.elements__card-trash-button'
         )
         if (this.#ownerId === this.#userId) {
             deleteButton.addEventListener('click', this.#handleDelete)
         } else {
-            deleteButton.style.display = 'none' // Hide delete button if not owner
+            deleteButton.style.display = 'none' // Esconde o botão de deletar se não for o dono
         }
 
-        // Image click
+        // Clique na imagem
         this.#element
             .querySelector('.elements__card-image-button')
             .addEventListener('click', () => {
@@ -107,7 +107,7 @@ export default class Card {
         imageEl.alt = this.#name
         titleEl.textContent = this.#name
 
-        // Set initial like status
+        // Define o status inicial de curtir
         this.#updateLikeButton()
 
         this.#setEventListeners()

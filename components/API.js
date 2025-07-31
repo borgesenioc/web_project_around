@@ -17,21 +17,21 @@ export default class Api {
         return Promise.reject(`Error: ${res.status}`)
     }
 
-    // Get initial cards from the server
+    // Buscar os cards iniciais do servidor
     getInitialCards() {
         return fetch(`${this._baseUrl}/cards`, {
             headers: this._headers,
         }).then(this._checkResponse)
     }
 
-    // Get user info from the server
+    // Buscar informações do usuário no servidor
     getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {
             headers: this._headers,
         }).then(this._checkResponse)
     }
 
-    // Update profile data
+    // Atualizar dados do perfil
     updateUserInfo({ name, about }) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
@@ -43,7 +43,7 @@ export default class Api {
         }).then(this._checkResponse)
     }
 
-    // Add new card
+    // Adicionar novo card
     addCard({ name, link }) {
         return fetch(`${this._baseUrl}/cards`, {
             method: 'POST',
@@ -55,7 +55,7 @@ export default class Api {
         }).then(this._checkResponse)
     }
 
-    // Delete a card
+    // Excluir um card
     deleteCard(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
@@ -63,7 +63,7 @@ export default class Api {
         }).then(this._checkResponse)
     }
 
-    // Add like
+    // Adicionar like
     addLike(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
             method: 'PUT',
@@ -71,7 +71,7 @@ export default class Api {
         }).then(this._checkResponse)
     }
 
-    // Remove like
+    // Remover like
     removeLike(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
             method: 'DELETE',
@@ -79,7 +79,7 @@ export default class Api {
         }).then(this._checkResponse)
     }
 
-    // Update profile picture
+    // Atualizar foto do perfil
     updateAvatar(avatar) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
@@ -90,7 +90,7 @@ export default class Api {
         }).then(this._checkResponse)
     }
 
-    // Get initial data (user info and cards)
+    // Buscar dados iniciais (informações do usuário e cards)
     getAppInfo() {
         return Promise.all([this.getUserInfo(), this.getInitialCards()])
     }

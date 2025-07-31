@@ -17,7 +17,7 @@ export default class UserInfo {
         if (job) this._jobElement.textContent = job
     }
 
-    // Add this method to handle avatar updates
+    // Adicione este método para lidar com atualizações do avatar
     setAvatar(avatar) {
         if (avatar && this._avatarElement) {
             this._avatarElement.src = avatar

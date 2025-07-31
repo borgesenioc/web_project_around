@@ -23,7 +23,7 @@ export default class PopupWithForm extends Popup {
         }
     }
 
-    // Add this method - it's missing from your class
+    // Adicionado para coletar os valores dos inputs do formulário
     _getInputValues() {
         const formValues = {}
 
