@@ -29,7 +29,7 @@ export const initialCards = [
 // Configuração para a validação de formulários
 export const validationConfig = {
     formSelector: '.popup__form',
-    inputSelector: '.popup__input',
+    inputSelector: '.popup__input, .popup-card__form-input',
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',

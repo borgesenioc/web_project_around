@@ -1,10 +1,10 @@
 export default class UserInfo {
-    constructor({ nameSelector, jobSelector }) {
+    constructor({ nameSelector, jobSelector, avatarSelector }) {
         this._nameElement = document.querySelector(nameSelector)
         this._jobElement = document.querySelector(jobSelector)
+        this._avatarElement = document.querySelector(avatarSelector)
     }
 
-    // Método público que retorna um objeto com a informação do usuário
     getUserInfo() {
         return {
             name: this._nameElement.textContent,
@@ -12,9 +12,15 @@ export default class UserInfo {
         }
     }
 
-    // Método público que atualiza a informação do usuário na página
     setUserInfo({ name, job }) {
         if (name) this._nameElement.textContent = name
         if (job) this._jobElement.textContent = job
+    }
+
+    // Adicione este método para lidar com atualizações do avatar
+    setAvatar(avatar) {
+        if (avatar && this._avatarElement) {
+            this._avatarElement.src = avatar
+        }
     }
 }

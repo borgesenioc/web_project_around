@@ -1,49 +1,102 @@
-# Tripleten web_project_around (Around The U.S.)
+# Tripleten web_project_around (EUA Afora)
 
-An interactive web project showcasing modern web development techniques, responsive design, and object-oriented programming using HTML, CSS, and ES6 JavaScript classes.
+Um projeto web interativo demonstrando técnicas modernas de desenvolvimento web, design responsivo e programação orientada a objetos usando HTML, CSS e classes JavaScript ES6, com integração de API para persistência de dados.
 
-## Features
+---
 
--   **Modular CSS:** Organized styles in the `blocks/` directory (e.g., [`header.css`](blocks/header.css), [`popup.css`](blocks/popup.css))
--   **Responsive Design:** Media queries ensure a smooth experience on both desktop and mobile devices.
--   **Object-Oriented JavaScript:** Modern ES6 classes for improved code organization:
-    -   The [`Card`](scripts/Card.js) class handles card creation and functionality.
-    -   The [`FormValidator`](scripts/FormValidator.js) class manages form validation.
-    -   [`utils.js`](scripts/utils.js) contains utility functions and configuration.
-    -   [`index.js`](scripts/index.js) orchestrates these components together.
--   **Popup Functionality:** Open and close profile editor and card creation forms.
--   **Form Validation:** Real-time validation for all forms with visual feedback.
--   **Interactive Elements:** Add cards, like cards, remove cards, and view enlarged images.
--   **Code Quality:** Configured with [Prettier (`.prettierrc`](.prettierrc)) and [EditorConfig (`.editorconfig`](.editorconfig)) for consistent styling.
+> ⚠️ **Nota Importante**  
+> Este projeto ainda **não possui um método de build completo**. Para que as requisições à API funcionem corretamente, é necessário **definir manualmente o token da API** no `localStorage` do navegador antes de interagir com o app.
 
-## Project Structure
+### Como configurar o token da API temporariamente:
 
--   **HTML:** Core structure defined in [`index.html`](index.html)
--   **CSS:**
-    -   Global styles in [`pages/index.css`](pages/index.css)
-    -   Component styles in `blocks/`
-    -   Third-party styles in [`vendor/`](vendor/)
--   **JavaScript:**
-    -   Entry point in [`index.js`](scripts/index.js) that coordinates components.
-    -   `Card.js` and `FormValidator.js` contain the primary ES6 classes.
-    -   `utils.js` contains utility functions, initial card data, and configuration.
--   **Assets:** Organized images and fonts in the `images/` and [`vendor/fonts/fonts.css`](vendor/fonts/fonts.css) directories.
+```js
+// Obtenha o token do localStorage (defina manualmente uma vez ou via um script de configuração)
+export const API_TOKEN = localStorage.getItem('api_token') || ''
+export const API_BASE_URL = 'https://around-api.pt-br.tripleten-services.com/v1'
 
-## Getting Started
+// Não esqueça de definir o API_TOKEN no console do navegador antes de usar o app
 
-1. Clone the repository.
-2. Open using a live server (e.g., VS Code's Live Server extension) to ensure modules work correctly.
-3. Interact with the page to add cards, edit profile, and view images.
+// cole no console do navegador:
+localStorage.setItem('api_token', 'SEU_API_TOKEN')
+// pressione ENTER
+// Recarregue a página
+```
 
-## Technologies
+## Funcionalidades
+
+-   **CSS Modular**: Estilos organizados no diretório `blocks` (por exemplo, `header.css`, `popup.css`)
+-   **Design Responsivo**: Media queries garantem uma experiência suave tanto em dispositivos desktop quanto móveis.
+-   **JavaScript Orientado a Objetos**: Classes ES6 modernas para melhor organização do código:
+    -   `Card`: gerencia a criação e funcionalidade dos cartões.
+    -   `FormValidator`: administra a validação de formulários.
+    -   `Popup` e suas subclasses: controlam os diferentes tipos de janelas modais.
+    -   `Api`: gerencia todas as interações com o servidor.
+    -   `UserInfo`: controla os dados do usuário.
+    -   `Section`: lida com a renderização de elementos na página.
+-   **Integração com API**: Comunicação completa com o servidor para:
+    -   Carregar informações do usuário
+    -   Salvar alterações de perfil
+    -   Carregar cartões iniciais
+    -   Adicionar novos cartões
+    -   Excluir cartões
+    -   Curtir/descurtir cartões
+    -   Atualizar foto do perfil
+-   **Funcionalidades de Popup**:
+    -   Abrir e fechar editor de perfil
+    -   Criador de cartões
+    -   Visualizador de imagens
+-   **Validação de Formulários**: Validação em tempo real para todos os formulários com feedback visual.
+-   **Elementos Interativos**: Adicionar cartões, curtir cartões, remover cartões e visualizar imagens ampliadas.
+-   **Feedback ao Usuário**: Indicadores de carregamento durante operações no servidor.
+-   **Qualidade de Código**: Configurado com Prettier e EditorConfig para estilo consistente.
+
+---
+
+## Estrutura do Projeto
+
+### HTML
+
+-   Estrutura principal definida em `index.html`
+
+### CSS
+
+-   Estilos globais: `index.css`
+-   Estilos de componentes: diretório `blocks`
+-   Estilos de terceiros: diretório `vendor`
+
+### JavaScript
+
+-   Ponto de entrada: `index.js` (coordena os componentes)
+-   Classes ES6: organizadas em arquivos separados dentro de `components`
+-   Configuração da API: `config.js`
+
+### Assets
+
+-   Imagens: diretório `images`
+-   Fontes: `fonts.css`
+
+---
+
+## Como Iniciar
+
+1. Clone o repositório.
+2. Abra usando um servidor local (por exemplo, a extensão **Live Server** do VS Code) para garantir que os módulos funcionem corretamente.
+3. Interaja com a página para adicionar cartões, editar o perfil e visualizar imagens.
+
+---
+
+## Tecnologias
 
 -   HTML5 & CSS3
--   JavaScript (ES6 Classes, Modules)
--   Object-Oriented Programming
--   BEM Methodology
--   Responsive design
--   Prettier, EditorConfig
+-   JavaScript (Classes ES6, Módulos)
+-   Programação Orientada a Objetos
+-   Metodologia BEM
+-   Design Responsivo
+-   Integração com API RESTful
+-   Promessas e Requisições Assíncronas
 
-## Author
+---
 
-Enio Borges
+## Autor
+
+**Enio Borges**
