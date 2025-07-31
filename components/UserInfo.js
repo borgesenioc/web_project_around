@@ -1,10 +1,18 @@
+Users /
+    borgesenioc /
+    Projects /
+    tripleten /
+    web_project_around /
+    components /
+    UserInfo.js
+
 export default class UserInfo {
-    constructor({ nameSelector, jobSelector }) {
+    constructor({ nameSelector, jobSelector, avatarSelector }) {
         this._nameElement = document.querySelector(nameSelector)
         this._jobElement = document.querySelector(jobSelector)
+        this._avatarElement = document.querySelector(avatarSelector)
     }
 
-    // Método público que retorna um objeto com a informação do usuário
     getUserInfo() {
         return {
             name: this._nameElement.textContent,
@@ -12,9 +20,12 @@ export default class UserInfo {
         }
     }
 
-    // Método público que atualiza a informação do usuário na página
     setUserInfo({ name, job }) {
         if (name) this._nameElement.textContent = name
         if (job) this._jobElement.textContent = job
+    }
+
+    setAvatar(avatar) {
+        if (avatar) this._avatarElement.src = avatar
     }
 }
