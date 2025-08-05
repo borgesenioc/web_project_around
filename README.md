@@ -4,7 +4,7 @@ Um projeto web interativo demonstrando técnicas modernas de desenvolvimento web
 
 ---
 
-> ⚠️ **Nota Importante**  
+> **Nota Importante**  
 > Este projeto ainda **não possui um método de build completo**. Para que as requisições à API funcionem corretamente, é necessário **definir manualmente o token da API** no `localStorage` do navegador antes de interagir com o app.
 
 ### Como configurar o token da API temporariamente:
