@@ -80,7 +80,7 @@ localStorage.setItem('api_token', 'SEU_API_TOKEN')
 ## Como Iniciar
 
 1. Clone o repositório.
-2. Abra usando um servidor local (por exemplo, a extensão **Live Server** do VS Code) para garantir que os módulos funcionem corretamente.
+2. Abra usando um servidor local (por exemplo, a extensão **Live Server** do VS Code) para garantir que os módulos funcionem como esperado.
 3. Interaja com a página para adicionar cartões, editar o perfil e visualizar imagens.
 
 ---
