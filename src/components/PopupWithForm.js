@@ -5,6 +5,7 @@ export default class PopupWithForm extends Popup {
         super(popupSelector)
         this._submitCallback = submitCallback
         this._form = this._popup.querySelector(formSelector)
+        this._popupSelector = popupSelector // Store selector for reference
 
         if (this._form) {
             this._inputList = this._form.querySelectorAll(
@@ -53,6 +54,20 @@ export default class PopupWithForm extends Popup {
         super.close()
         if (this._form) {
             this._form.reset()
+        }
+    }
+
+    // Add custom open method to handle special case for popup-card
+    open() {
+        super.open() // Call the parent open method first
+
+        // Special handling for popup-card
+        if (this._popupSelector === '.popup-card') {
+            const popupElement = document.querySelector(this._popupSelector)
+            if (popupElement) {
+                popupElement.classList.add('popup-card_opened')
+                console.log('Added popup-card_opened class')
+            }
         }
     }
 

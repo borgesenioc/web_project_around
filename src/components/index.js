@@ -9,6 +9,9 @@ import Api from './Api.js'
 import { validationConfig } from './utils.js'
 import { API_BASE_URL } from './config.js'
 
+// debug-remove
+console.log('Script loaded')
+
 // Inicializa a API sem hardcode do token
 const api = new Api({
     baseUrl: API_BASE_URL,
@@ -164,8 +167,13 @@ document
         profileFormPopup.open()
     })
 
+// debug-remove
+const addButton = document.querySelector('.profile__add-button')
+console.log('Add button element:', addButton)
+
 // Adiciona listener ao botão de adicionar novo card
 document.querySelector('.profile__add-button').addEventListener('click', () => {
+    console.log('Add button clicked') // debug-remove
     addCardFormPopup.open()
 })
 
