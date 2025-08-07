@@ -5,6 +5,7 @@ export default class PopupWithForm extends Popup {
         super(popupSelector)
         this._submitCallback = submitCallback
         this._form = this._popup.querySelector(formSelector)
+        this._popupSelector = popupSelector // Armazena o seletor para referência
 
         if (this._form) {
             this._inputList = this._form.querySelectorAll(
@@ -16,7 +17,7 @@ export default class PopupWithForm extends Popup {
                 : 'Salvar'
         } else {
             console.error(
-                `Form not found with selector: ${formSelector} in popup: ${popupSelector}`
+                `Formulário não encontrado com o seletor: ${formSelector} no popup: ${popupSelector}`
             )
             this._inputList = []
             this._submitButtonText = 'Salvar'
@@ -31,9 +32,9 @@ export default class PopupWithForm extends Popup {
             this._inputList.forEach((input) => {
                 formValues[input.name] = input.value
             })
-            console.log('Form values collected:', formValues)
+            console.log('Valores do formulário coletados:', formValues)
         } else {
-            console.warn('No input elements found in form')
+            console.warn('Nenhum elemento de input encontrado no formulário')
         }
 
         return formValues
@@ -51,6 +52,38 @@ export default class PopupWithForm extends Popup {
 
     close() {
         super.close()
+        if (this._form) {
+            this._form.reset()
+        }
+    }
+
+    // Adiciona método open personalizado para tratar caso especial do popup-card
+    open() {
+        super.open() // Chama primeiro o método open da classe pai
+
+        // Tratamento especial para popup-card
+        if (this._popupSelector === '.popup-card') {
+            const popupElement = document.querySelector(this._popupSelector)
+            if (popupElement) {
+                popupElement.classList.add('popup-card_opened')
+                console.log('Classe popup-card_opened adicionada')
+            }
+        }
+    }
+
+    close() {
+        // Tratamento especial para popup-card - remove a classe personalizada primeiro
+        if (this._popupSelector === '.popup-card') {
+            const popupElement = document.querySelector(this._popupSelector)
+            if (popupElement) {
+                popupElement.classList.remove('popup-card_opened')
+                console.log('Classe popup-card_opened removida')
+            }
+        }
+
+        // Depois chama o método close da classe pai
+        super.close()
+
         if (this._form) {
             this._form.reset()
         }
